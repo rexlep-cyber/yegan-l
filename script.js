@@ -10,6 +10,7 @@ const letterPage = document.getElementById("letterPage");
 const promisePage = document.getElementById("promisePage");
 const reasonsPage = document.getElementById("reasonsPage");
 const momentsPage = document.getElementById("momentsPage");
+const wishPage = document.getElementById("wishPage");
 const letterHearts = document.getElementById("letterHearts");
 const yesCard = yesPage.querySelector(".yes-card");
 
@@ -19,6 +20,9 @@ const letterBtn = document.getElementById("letterBtn");
 const promiseBtn = document.getElementById("promiseBtn");
 const reasonsBtn = document.getElementById("reasonsBtn");
 const momentsBtn = document.getElementById("momentsBtn");
+const wishBtn = document.getElementById("wishBtn");
+const makeWishBtn = document.getElementById("makeWishBtn");
+const wishText = document.getElementById("wishText");
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
@@ -40,6 +44,9 @@ const backFromReasons =
 
 const backFromMoments =
     document.getElementById("backFromMoments");
+
+const backFromWish =
+    document.getElementById("backFromWish");
 
 const backFromYes =
     document.getElementById("backFromYes");
@@ -126,6 +133,19 @@ momentsBtn.addEventListener("click", () => {
 });
 
 
+wishBtn.addEventListener("click", () => {
+
+    showPage(wishPage);
+
+    wishPage.classList.remove("wish-active");
+    wishText.classList.remove("wish-visible");
+
+    requestAnimationFrame(() => {
+        wishPage.classList.add("wish-active");
+    });
+});
+
+
 /* =====================================================
    Back
 ===================================================== */
@@ -174,6 +194,36 @@ backFromMoments.addEventListener("click", () => {
     showPage(homePage);
 
     momentsPage.classList.remove("moments-active");
+});
+
+
+const wishes = [
+    "آرزو می‌کنم دوشنبه شروع کلی خاطره‌ی قشنگ باشه ❤️",
+    "آرزو می‌کنم همیشه کنار هم راحت بخندیم :) ",
+    "آرزو می‌کنم هر بار دیدنت، از بار قبل قشنگ‌تر باشه.",
+    "آرزو می‌کنم قصه‌ی ما پر از قرارهای ساده و دوست‌داشتنی بشه."
+];
+
+let wishIndex = 0;
+
+makeWishBtn.addEventListener("click", () => {
+
+    wishText.classList.remove("wish-visible");
+
+    wishIndex = (wishIndex + 1) % wishes.length;
+
+    setTimeout(() => {
+        wishText.textContent = wishes[wishIndex];
+        wishText.classList.add("wish-visible");
+    }, 180);
+});
+
+
+backFromWish.addEventListener("click", () => {
+
+    showPage(homePage);
+
+    wishPage.classList.remove("wish-active");
 });
 
 

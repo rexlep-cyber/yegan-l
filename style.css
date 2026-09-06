@@ -437,6 +437,36 @@ h2 {
     animation-delay: 0.9s;
 }
 
+.wish-card {
+    text-align: center;
+}
+
+.wish-text {
+    min-height: 76px;
+    margin-top: 24px;
+    color: #806c72;
+    font-size: 16px;
+    line-height: 2;
+    opacity: 0.82;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.wish-text.wish-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.wish-action {
+    width: min(100%, 250px);
+    margin-top: 24px;
+}
+
+.wish-active .wish-card {
+    animation: wishCardIn 0.65s ease both;
+}
+
 
 /* =====================================================
    Question
@@ -991,5 +1021,17 @@ h2 {
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes wishCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
