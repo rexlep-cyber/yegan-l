@@ -290,6 +290,18 @@ h2 {
     box-shadow: 0 -8px 18px rgba(104, 35, 52, 0.06);
 }
 
+#homePage {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+#homePage .card {
+    flex: 0 0 auto;
+    margin: 24px auto;
+}
+
 .note-mark {
     display: grid;
     place-items: center;
