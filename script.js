@@ -9,6 +9,7 @@ const yesPage = document.getElementById("yesPage");
 const letterPage = document.getElementById("letterPage");
 const promisePage = document.getElementById("promisePage");
 const reasonsPage = document.getElementById("reasonsPage");
+const momentsPage = document.getElementById("momentsPage");
 const letterHearts = document.getElementById("letterHearts");
 const yesCard = yesPage.querySelector(".yes-card");
 
@@ -17,6 +18,7 @@ const dateBtn = document.getElementById("dateBtn");
 const letterBtn = document.getElementById("letterBtn");
 const promiseBtn = document.getElementById("promiseBtn");
 const reasonsBtn = document.getElementById("reasonsBtn");
+const momentsBtn = document.getElementById("momentsBtn");
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
@@ -35,6 +37,9 @@ const backFromPromise =
 
 const backFromReasons =
     document.getElementById("backFromReasons");
+
+const backFromMoments =
+    document.getElementById("backFromMoments");
 
 const backFromYes =
     document.getElementById("backFromYes");
@@ -109,6 +114,18 @@ reasonsBtn.addEventListener("click", () => {
 });
 
 
+momentsBtn.addEventListener("click", () => {
+
+    showPage(momentsPage);
+
+    momentsPage.classList.remove("moments-active");
+
+    requestAnimationFrame(() => {
+        momentsPage.classList.add("moments-active");
+    });
+});
+
+
 /* =====================================================
    Back
 ===================================================== */
@@ -149,6 +166,14 @@ backFromReasons.addEventListener("click", () => {
     showPage(homePage);
 
     reasonsPage.classList.remove("reasons-active");
+});
+
+
+backFromMoments.addEventListener("click", () => {
+
+    showPage(homePage);
+
+    momentsPage.classList.remove("moments-active");
 });
 
 
