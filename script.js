@@ -8,6 +8,7 @@ const surprisePage = document.getElementById("surprisePage");
 const yesPage = document.getElementById("yesPage");
 const letterPage = document.getElementById("letterPage");
 const promisePage = document.getElementById("promisePage");
+const reasonsPage = document.getElementById("reasonsPage");
 const letterHearts = document.getElementById("letterHearts");
 const yesCard = yesPage.querySelector(".yes-card");
 
@@ -15,6 +16,7 @@ const surpriseBtn = document.getElementById("surpriseBtn");
 const dateBtn = document.getElementById("dateBtn");
 const letterBtn = document.getElementById("letterBtn");
 const promiseBtn = document.getElementById("promiseBtn");
+const reasonsBtn = document.getElementById("reasonsBtn");
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
@@ -30,6 +32,9 @@ const backFromLetter =
 
 const backFromPromise =
     document.getElementById("backFromPromise");
+
+const backFromReasons =
+    document.getElementById("backFromReasons");
 
 const backFromYes =
     document.getElementById("backFromYes");
@@ -92,6 +97,18 @@ promiseBtn.addEventListener("click", () => {
 });
 
 
+reasonsBtn.addEventListener("click", () => {
+
+    showPage(reasonsPage);
+
+    reasonsPage.classList.remove("reasons-active");
+
+    requestAnimationFrame(() => {
+        reasonsPage.classList.add("reasons-active");
+    });
+});
+
+
 /* =====================================================
    Back
 ===================================================== */
@@ -124,6 +141,14 @@ backFromYes.addEventListener("click", () => {
     showPage(homePage);
 
     yesCard.classList.remove("revealed");
+});
+
+
+backFromReasons.addEventListener("click", () => {
+
+    showPage(homePage);
+
+    reasonsPage.classList.remove("reasons-active");
 });
 
 
@@ -226,20 +251,33 @@ function moveNoButton() {
     const buttonWidth = noBtn.offsetWidth;
     const buttonHeight = noBtn.offsetHeight;
 
-    const margin = 20;
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
+    const margin = isMobile ? 16 : 24;
 
-    const maxX =
-        window.innerWidth -
-        buttonWidth -
-        margin;
+    const minX = isMobile
+        ? Math.max(margin, window.innerWidth * 0.12)
+        : margin;
 
-    const maxY =
-        window.innerHeight -
-        buttonHeight -
-        margin;
+    const maxX = isMobile
+        ? Math.min(
+            window.innerWidth - buttonWidth - margin,
+            window.innerWidth * 0.88 - buttonWidth
+        )
+        : window.innerWidth - buttonWidth - margin;
 
-    const minX = margin;
-    const minY = margin;
+    const minY = isMobile
+        ? Math.min(150, window.innerHeight * 0.22)
+        : margin;
+
+    const maxY = isMobile
+        ? Math.max(
+            minY,
+            Math.min(
+                window.innerHeight - buttonHeight - margin,
+                window.innerHeight * 0.72
+            )
+        )
+        : window.innerHeight - buttonHeight - margin;
 
     let x =
         Math.random() *
