@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fff7f8">
+
+    <title>برای یگانه ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Floating hearts -->
+    <div class="floating-hearts" aria-hidden="true">
+        <span>♡</span>
+        <span>♥</span>
+        <span>♡</span>
+        <span>♥</span>
+        <span>♡</span>
+        <span>♥</span>
+        <span>♡</span>
+    </div>
+
+
+    <!-- =========================
+         صفحه اصلی
+    ========================== -->
+
+    <main id="homePage" class="page active">
+
+        <div class="card">
+
+            <div class="small-heart">♡</div>
+
+            <p class="eyebrow">یه چیز کوچیک برات آماده کردم...</p>
+
+            <h1>
+                یگانه،
+                <br>
+                یه انتخاب با تو دارم ❤️
+            </h1>
+
+            <p class="description">
+                فقط قول بده قبل از انتخاب،
+                تا آخرش رو ببینی :)
+            </p>
+
+            <div class="buttons home-actions">
+
+                <button
+                    class="btn primary"
+                    id="surpriseBtn"
+                    type="button">
+                    ✨ سوپرایز
+                </button>
+
+                <button
+                    class="btn secondary"
+                    id="dateBtn"
+                    type="button">
+                    با من میای بیرون؟ ❤️
+                </button>
+
+                <button
+                    class="btn secondary"
+                    id="letterBtn"
+                    type="button">
+                    💌 یه نامه برای تو
+                </button>
+
+                <button
+                    class="btn secondary"
+                    id="promiseBtn"
+                    type="button">
+                    ✨ یه قول کوچیک
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         صفحه نامه
+    ========================== -->
+
+    <main id="letterPage" class="page">
+
+        <div class="card note-card">
+
+            <div class="note-mark" aria-hidden="true">♡</div>
+
+            <p class="eyebrow">یه نامه‌ی کوچیک برای تو</p>
+
+            <h2>یگانه جان،</h2>
+
+            <p class="note-text">
+                بعضی آدم‌ها بی‌خبر وارد زندگی‌مان می‌شوند،
+                اما بعد از آمدنشان، همه‌چیز آرام‌آرام رنگ دیگری می‌گیرد.
+                روزها روشن‌تر می‌شوند، لبخندها واقعی‌تر،
+                و حتی لحظه‌های معمولی هم ارزش به یاد ماندن پیدا می‌کنند.
+                تو برای من همان آدمی؛ کسی که بودنش،
+                ساده‌ترین روزها را دوست‌داشتنی‌تر می‌کند.
+                <br><br>
+                نمی‌دانم آینده چه قصه‌ای برایمان نوشته،
+                اما می‌دانم دلم می‌خواهد از همین لحظه‌های کوچک شروع کنیم؛
+                از یک کافه‌ی دنج، از حرف‌هایی که هنوز نگفته‌ایم،
+                و از خنده‌هایی که قرار است با هم بسازیم.
+                فقط خواستم بدانی حضورت برای من خاص است.
+            </p>
+
+            <p class="note-signature">با عشق، امیر ❤️</p>
+
+            <button
+                class="back-btn"
+                id="backFromLetter"
+                type="button">
+                ← برگشت به اول
+            </button>
+
+        </div>
+
+        <div id="letterHearts" class="letter-hearts" aria-hidden="true"></div>
+
+    </main>
+
+
+    <!-- =========================
+         صفحه قول
+    ========================== -->
+
+    <main id="promisePage" class="page">
+
+        <div class="card note-card promise-card">
+
+            <div class="note-mark" aria-hidden="true">✦</div>
+
+            <p class="eyebrow">قول می‌دم...</p>
+
+            <h2>این قرار، فقط شروعشه.</h2>
+
+            <div class="promise-list">
+                <p>با حوصله به حرفات گوش بدم</p>
+                <p>برای خندیدنت وقت بذارم</p>
+                <p>و دوشنبه رو قشنگ‌تر کنیم :)</p>
+            </div>
+
+            <button
+                class="back-btn"
+                id="backFromPromise"
+                type="button">
+                ← برگشت به اول
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         صفحه سوال
+    ========================== -->
+
+    <main id="questionPage" class="page">
+
+        <div class="card question-card">
+
+            <div class="big-heart">♥</div>
+
+            <p class="eyebrow">یه سوال خیلی مهم...</p>
+
+            <h2>
+                با من میای بیرون؟
+            </h2>
+
+            <p class="description">
+                فقط یه جواب ساده می‌خوام :)
+            </p>
+
+            <div class="answer-area">
+
+                <button
+                    class="btn yes-btn"
+                    id="yesBtn"
+                    type="button">
+                    آره ❤️
+                </button>
+
+                <button
+                    class="btn no-btn"
+                    id="noBtn"
+                    type="button">
+                    نه
+                </button>
+
+            </div>
+
+            <p id="noMessage" class="no-message"></p>
+
+            <button
+                class="back-btn"
+                id="backFromQuestion"
+                type="button">
+                ← برگشت
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         صفحه سورپرایز
+    ========================== -->
+
+    <main id="surprisePage" class="page surprise-page">
+
+        <div class="surprise-content">
+
+            <canvas id="heartCanvas"></canvas>
+
+            <div id="loveText" class="love-text">
+                <span>I LOVE YOU</span>
+                <strong>Yeganeh</strong>
+            </div>
+
+            <button
+                id="backFromSurprise"
+                class="back-btn surprise-back"
+                type="button">
+                ← برگشت
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         صفحه جواب مثبت
+    ========================== -->
+
+    <main id="yesPage" class="page">
+
+        <div class="card yes-card">
+
+            <div class="success-heart" aria-hidden="true">♡</div>
+
+            <p class="eyebrow">برای دو نفر، یک قرار کوچک</p>
+
+            <h1>پس یه قرار داریم... ❤️</h1>
+
+            <div class="date-details" aria-live="polite">
+                <p class="date-detail">دوشنبه</p>
+                <p class="date-detail">یه کافه دنج ☕️</p>
+                <p class="date-detail">هات‌چیپس با هم 🌶️❤️</p>
+                <p class="date-detail">و کلی حرف برای گفتن :)</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="final-message">
+                <strong>مرسی که گفتی آره ❤️</strong>
+                <span>دوشنبه منتظرتم :)</span>
+            </div>
+
+            <div class="little-hearts" aria-hidden="true">♡　♥　♡</div>
+
+            <button
+                class="back-btn"
+                id="backFromYes"
+                type="button">
+                ← برگشت به اول
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

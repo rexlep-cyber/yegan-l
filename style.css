@@ -1,0 +1,839 @@
+/* =====================================================
+   Base
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Vazirmatn", sans-serif;
+    background: #fff7f8;
+    color: #2d2024;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   Pages
+===================================================== */
+
+.page {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(0.97);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        visibility 0.45s ease;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+
+/* =====================================================
+   Card
+===================================================== */
+
+.card {
+    position: relative;
+
+    width: min(100%, 470px);
+
+    padding: 48px 36px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    border: 1px solid rgba(214, 70, 99, 0.10);
+
+    border-radius: 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(104, 35, 52, 0.10);
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* =====================================================
+   Typography
+===================================================== */
+
+.eyebrow {
+    color: #a66a77;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-size: clamp(30px, 8vw, 43px);
+    line-height: 1.45;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: clamp(30px, 8vw, 42px);
+    line-height: 1.4;
+
+    margin-bottom: 12px;
+}
+
+.description {
+    margin-top: 18px;
+
+    color: #806c72;
+
+    font-size: 15px;
+    line-height: 2;
+}
+
+
+/* =====================================================
+   Hearts
+===================================================== */
+
+.small-heart {
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff0f3;
+
+    color: #e63e62;
+
+    font-size: 34px;
+
+    animation: softPulse 2s ease-in-out infinite;
+}
+
+.big-heart {
+    color: #e63e62;
+
+    font-size: 75px;
+
+    line-height: 1;
+
+    margin-bottom: 20px;
+
+    filter: drop-shadow(
+        0 8px 18px rgba(230, 62, 98, 0.25)
+    );
+
+    animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.success-heart {
+    font-size: 72px;
+
+    margin-bottom: 18px;
+
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   Buttons
+===================================================== */
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+
+    margin-top: 30px;
+}
+
+.home-actions {
+    gap: 11px;
+}
+
+.home-actions .btn {
+    min-height: 52px;
+}
+
+.home-actions .primary {
+    grid-column: 1 / -1;
+}
+
+#promiseBtn {
+    width: min(100%, 260px);
+    margin-inline: auto;
+}
+
+.btn {
+    width: 100%;
+
+    min-height: 56px;
+
+    border: none;
+    border-radius: 17px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.primary {
+    color: white;
+    background: #e63e62;
+
+    box-shadow:
+        0 10px 25px rgba(230, 62, 98, 0.22);
+}
+
+.primary:hover {
+    background: #d93659;
+    transform: translateY(-2px);
+}
+
+.secondary {
+    color: #d93659;
+
+    background: #fff;
+
+    border: 1px solid #f0c7d0;
+}
+
+.secondary:hover {
+    background: #fff7f8;
+}
+
+
+/* =====================================================
+   Personal sections
+===================================================== */
+
+.note-card {
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: 45px 34px;
+}
+
+.note-mark {
+    display: grid;
+    place-items: center;
+
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 24px;
+
+    border-radius: 50%;
+    background: #fff0f3;
+    color: #e63e62;
+    font-size: 29px;
+}
+
+.note-card h2 {
+    margin-bottom: 18px;
+}
+
+.note-text {
+    color: #806c72;
+    font-size: 16px;
+    line-height: 2.15;
+}
+
+.note-signature {
+    margin-top: 24px;
+    color: #a34f66;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.letter-hearts {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.letter-heart {
+    position: absolute;
+    left: calc(50% + var(--heart-x));
+    bottom: -72px;
+
+    color: #e63e62;
+    font-size: var(--heart-size);
+    opacity: 0;
+    text-shadow: 0 8px 22px rgba(230, 62, 98, 0.24);
+}
+
+#letterPage.letter-active .letter-heart {
+    animation: letterHeartRise var(--heart-duration) ease-in-out var(--heart-delay) forwards;
+}
+
+.promise-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.promise-list p {
+    padding: 13px 16px;
+    border: 1px solid #f2d9df;
+    border-radius: 13px;
+    background: rgba(255, 247, 248, 0.7);
+    color: #684f57;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   Question
+===================================================== */
+
+.question-card {
+    overflow: visible;
+}
+
+.answer-area {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 80px;
+
+    margin-top: 28px;
+}
+
+.yes-btn {
+    width: 145px;
+
+    color: white;
+
+    background: #e63e62;
+
+    box-shadow:
+        0 10px 25px rgba(230, 62, 98, 0.20);
+}
+
+.no-btn {
+    width: 110px;
+
+    color: #6d5b61;
+
+    background: #f6f1f2;
+
+    border: 1px solid #e9dfe1;
+
+    transition:
+        left 0.18s ease,
+        top 0.18s ease,
+        transform 0.18s ease;
+}
+
+.no-message {
+    min-height: 25px;
+
+    margin-top: 12px;
+
+    color: #b65b70;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   Back button
+===================================================== */
+
+.back-btn {
+    margin-top: 25px;
+
+    border: none;
+    background: transparent;
+
+    color: #9c777f;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    color: #d93659;
+}
+
+
+/* =====================================================
+   Surprise
+===================================================== */
+
+.surprise-page {
+    background: #050509;
+}
+
+.surprise-content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#heartCanvas {
+    width: min(85vw, 650px);
+    height: min(70vh, 600px);
+
+    display: block;
+}
+
+.love-text {
+    position: absolute;
+
+    bottom: 105px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+    color: #ff6b9a;
+
+    text-align: center;
+}
+
+.love-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.love-text span {
+    font-family: Arial, sans-serif;
+
+    font-size: clamp(22px, 6vw, 34px);
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+.love-text strong {
+    margin-top: 5px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: clamp(20px, 5vw, 28px);
+
+    font-weight: 400;
+
+    letter-spacing: 2px;
+
+    color: #ffd1dc;
+}
+
+.surprise-back {
+    position: absolute;
+
+    bottom: 40px;
+
+    color: #bda0a9;
+}
+
+
+/* =====================================================
+   Yes page
+===================================================== */
+
+.yes-card {
+    padding: 44px 30px;
+}
+
+.date-details {
+    display: grid;
+    gap: 12px;
+    margin-top: 29px;
+}
+
+.date-detail {
+    color: #684f57;
+    font-size: 17px;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.yes-card.revealed .date-detail {
+    animation: revealDetail 0.75s ease forwards;
+}
+
+.yes-card.revealed .date-detail:nth-child(1) {
+    animation-delay: 0.35s;
+}
+
+.yes-card.revealed .date-detail:nth-child(2) {
+    animation-delay: 0.85s;
+}
+
+.yes-card.revealed .date-detail:nth-child(3) {
+    animation-delay: 1.35s;
+}
+
+.yes-card.revealed .date-detail:nth-child(4) {
+    animation-delay: 1.85s;
+}
+
+.divider {
+    width: 50px;
+    height: 2px;
+
+    margin: 28px auto;
+
+    background: #f0b4c2;
+}
+
+.final-message {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #92747c;
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.yes-card.revealed .final-message {
+    animation: revealDetail 0.9s ease 2.5s forwards;
+}
+
+.final-message strong {
+    color: #a34f66;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.little-hearts {
+    margin-top: 25px;
+
+    color: #e63e62;
+
+    font-size: 19px;
+    opacity: 0;
+}
+
+.yes-card.revealed .little-hearts {
+    animation:
+        revealDetail 0.9s ease 3.05s forwards,
+        gentleFloat 3s ease-in-out 3.95s infinite;
+}
+
+
+/* =====================================================
+   Floating Hearts
+===================================================== */
+
+.floating-hearts {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: -1;
+}
+
+.floating-hearts span {
+    position: absolute;
+
+    bottom: -50px;
+
+    color: rgba(224, 77, 105, 0.16);
+
+    font-size: 25px;
+
+    animation: floatHeart linear infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+    left: 8%;
+    animation-duration: 13s;
+}
+
+.floating-hearts span:nth-child(2) {
+    left: 22%;
+    animation-duration: 17s;
+    animation-delay: 2s;
+}
+
+.floating-hearts span:nth-child(3) {
+    left: 40%;
+    animation-duration: 14s;
+    animation-delay: 4s;
+}
+
+.floating-hearts span:nth-child(4) {
+    left: 58%;
+    animation-duration: 19s;
+    animation-delay: 1s;
+}
+
+.floating-hearts span:nth-child(5) {
+    left: 72%;
+    animation-duration: 15s;
+    animation-delay: 3s;
+}
+
+.floating-hearts span:nth-child(6) {
+    left: 84%;
+    animation-duration: 18s;
+    animation-delay: 5s;
+}
+
+.floating-hearts span:nth-child(7) {
+    left: 94%;
+    animation-duration: 16s;
+    animation-delay: 6s;
+}
+
+
+/* =====================================================
+   Animations
+===================================================== */
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.08);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.05);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+@keyframes softPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes floatHeart {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(25deg);
+
+        opacity: 0;
+    }
+}
+
+@keyframes revealDetail {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gentleFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes letterHeartRise {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) rotate(-8deg) scale(0.7);
+    }
+
+    10% {
+        opacity: 0.95;
+    }
+
+    25% {
+        transform: translate(calc(-50% + var(--heart-drift-a)), -18vh) rotate(10deg) scale(0.9);
+    }
+
+    45% {
+        transform: translate(calc(-50% + var(--heart-drift-b)), -42vh) rotate(-8deg) scale(1);
+    }
+
+    68% {
+        transform: translate(calc(-50% + var(--heart-drift-c)), -68vh) rotate(8deg) scale(0.94);
+    }
+
+    86% {
+        opacity: 0.72;
+        transform: translate(calc(-50% + var(--heart-drift-b)), -91vh) rotate(-5deg) scale(0.82);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -112vh) rotate(4deg) scale(0.7);
+    }
+}
+
+
+/* =====================================================
+   Mobile
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .page {
+        padding: 16px;
+    }
+
+    .card {
+        padding: 40px 24px;
+
+        border-radius: 25px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .yes-btn {
+        width: 135px;
+    }
+
+    .no-btn {
+        width: 100px;
+    }
+
+    .yes-card {
+        padding: 38px 22px;
+    }
+
+    .date-detail {
+        font-size: 16px;
+    }
+
+    .note-card {
+        padding: 38px 22px;
+    }
+
+    .note-text {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 560px) {
+    .home-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #promiseBtn {
+        grid-column: 1 / -1;
+    }
+}
