@@ -21,11 +21,36 @@ const promiseBtn = document.getElementById("promiseBtn");
 const reasonsBtn = document.getElementById("reasonsBtn");
 const momentsBtn = document.getElementById("momentsBtn");
 const wishBtn = document.getElementById("wishBtn");
+const archiveBtn = document.getElementById("archiveBtn");
+const archiveMenu = document.getElementById("archiveMenu");
+const gameBtn = document.getElementById("gameBtn");
+const gamePage = document.getElementById("gamePage");
+const memoryGrid = document.getElementById("memoryGrid");
+const gameMoves = document.getElementById("gameMoves");
+const gamePairs = document.getElementById("gamePairs");
+const gameMessage = document.getElementById("gameMessage");
+const gameReset = document.getElementById("gameReset");
+const backFromGame = document.getElementById("backFromGame");
+const mondayBtn = document.getElementById("mondayBtn");
+const mondayPage = document.getElementById("mondayPage");
+const mondayStops = document.querySelectorAll(".route-stop");
+const mondayMessage = document.getElementById("mondayMessage");
+const backFromMonday = document.getElementById("backFromMonday");
+const fridayBtn = document.getElementById("fridayBtn");
+const fridayPage = document.getElementById("fridayPage");
+const fridayChoices = document.querySelectorAll(".friday-choice");
+const fridayMessage = document.getElementById("fridayMessage");
+const backFromFriday = document.getElementById("backFromFriday");
 const makeWishBtn = document.getElementById("makeWishBtn");
 const wishText = document.getElementById("wishText");
+const repairChoices = document.querySelectorAll(".repair-choice");
+const repairAction = document.getElementById("repairAction");
+const repairMessage = document.getElementById("repairMessage");
+const surpriseLocks = document.querySelectorAll(".surprise-lock");
+const surpriseMessage = document.getElementById("surpriseMessage");
+const surpriseProgress = document.getElementById("surpriseProgress");
+const surpriseReveal = document.getElementById("surpriseReveal");
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
 
 const backFromQuestion =
     document.getElementById("backFromQuestion");
@@ -51,10 +76,6 @@ const backFromWish =
 const backFromYes =
     document.getElementById("backFromYes");
 
-const noMessage =
-    document.getElementById("noMessage");
-
-
 function showPage(page) {
 
     document
@@ -73,7 +94,30 @@ surpriseBtn.addEventListener("click", () => {
 
     showPage(surprisePage);
 
-    startHeartAnimation();
+    surpriseLocks.forEach(lock => lock.classList.remove("opened"));
+    surpriseMessage.textContent = "هنوز هیچ مهری باز نشده...";
+    surpriseProgress.textContent = "۰ از ۳ مهر باز شده";
+    surpriseReveal.hidden = true;
+});
+
+
+surpriseLocks.forEach(lock => {
+
+    lock.addEventListener("click", () => {
+
+        lock.classList.add("opened");
+
+        const openedCount = document.querySelectorAll(
+            ".surprise-lock.opened"
+        ).length;
+
+        surpriseProgress.textContent = `${openedCount} از ۳ مهر باز شده`;
+        surpriseMessage.textContent = openedCount === surpriseLocks.length
+            ? "هر سه مهر باز شد؛ این یکی برای توئه ❤️"
+            : `${lock.dataset.message} (${openedCount} از ۳ مهر باز شد)`;
+
+        surpriseReveal.hidden = openedCount !== surpriseLocks.length;
+    });
 });
 
 
@@ -85,14 +129,28 @@ dateBtn.addEventListener("click", () => {
 
     showPage(questionPage);
 
-    resetNoButton();
+    repairChoices.forEach(choice => choice.classList.remove("selected"));
+    repairAction.disabled = true;
+    repairAction.textContent = "اولین قدم آشتی ✨";
+    repairMessage.textContent = "هنوز هیچ تکه‌ای انتخاب نشده...";
+});
+
+
+archiveBtn.addEventListener("click", () => {
+
+    const isOpen = !archiveMenu.hidden;
+
+    archiveMenu.hidden = isOpen;
+    archiveBtn.setAttribute("aria-expanded", String(!isOpen));
+    archiveBtn.textContent = isOpen
+        ? "📚 بخش‌های قبلی"
+        : "✕ بستن بخش‌های قبلی";
 });
 
 
 letterBtn.addEventListener("click", () => {
 
     showPage(letterPage);
-
     letterPage.classList.remove("letter-active");
     letterHearts.replaceChildren();
 
@@ -112,7 +170,6 @@ promiseBtn.addEventListener("click", () => {
 reasonsBtn.addEventListener("click", () => {
 
     showPage(reasonsPage);
-
     reasonsPage.classList.remove("reasons-active");
 
     requestAnimationFrame(() => {
@@ -124,7 +181,6 @@ reasonsBtn.addEventListener("click", () => {
 momentsBtn.addEventListener("click", () => {
 
     showPage(momentsPage);
-
     momentsPage.classList.remove("moments-active");
 
     requestAnimationFrame(() => {
@@ -136,7 +192,6 @@ momentsBtn.addEventListener("click", () => {
 wishBtn.addEventListener("click", () => {
 
     showPage(wishPage);
-
     wishPage.classList.remove("wish-active");
     wishText.classList.remove("wish-visible");
 
@@ -146,9 +201,236 @@ wishBtn.addEventListener("click", () => {
 });
 
 
-/* =====================================================
-   Back
-===================================================== */
+const wishes = [
+    "آرزو می‌کنم همیشه کنار هم راحت بخندیم ❤️",
+    "آرزو می‌کنم هر بار دیدنت، از بار قبل قشنگ‌تر باشه.",
+    "آرزو می‌کنم قصه‌ی ما پر از لحظه‌های ساده و دوست‌داشتنی بشه."
+];
+
+let wishIndex = 0;
+
+
+makeWishBtn.addEventListener("click", () => {
+
+    wishText.classList.remove("wish-visible");
+    wishIndex = (wishIndex + 1) % wishes.length;
+
+    setTimeout(() => {
+        wishText.textContent = wishes[wishIndex];
+        wishText.classList.add("wish-visible");
+    }, 180);
+});
+
+
+const romanticPairs = [
+    { symbol: "♡", text: "لبخند" },
+    { symbol: "✦", text: "آرزو" },
+    { symbol: "♥", text: "تا ابد" }
+];
+
+let firstCard = null;
+let secondCard = null;
+let gameLocked = false;
+let moves = 0;
+let matchedPairs = 0;
+
+
+function shuffleCards(cards) {
+
+    return cards.sort(() => Math.random() - 0.5);
+}
+
+
+function createGameBoard() {
+
+    const cards = shuffleCards(
+        romanticPairs.flatMap(pair => [pair, pair])
+    );
+
+    firstCard = null;
+    secondCard = null;
+    gameLocked = false;
+    moves = 0;
+    matchedPairs = 0;
+    gameMoves.textContent = "حرکت‌ها: ۰";
+    gamePairs.textContent = "جفت‌ها: ۰ از ۳";
+    gameMessage.textContent = "دو کارت رو انتخاب کن ✨";
+    memoryGrid.replaceChildren();
+
+    cards.forEach((card, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "memory-card";
+        button.type = "button";
+        button.dataset.pair = card.text;
+        button.innerHTML = `
+            <span class="memory-card-inner">
+                <span class="memory-card-front">✦</span>
+                <span class="memory-card-back">
+                    <strong>${card.symbol}</strong>
+                    <small>${card.text}</small>
+                </span>
+            </span>
+        `;
+        button.setAttribute("aria-label", `کارت شماره ${index + 1}`);
+        button.addEventListener("click", () => revealCard(button));
+        memoryGrid.appendChild(button);
+    });
+}
+
+
+function revealCard(card) {
+
+    if (
+        gameLocked ||
+        card.classList.contains("flipped") ||
+        card.classList.contains("matched")
+    ) {
+        return;
+    }
+
+    card.classList.add("flipped");
+
+    if (!firstCard) {
+        firstCard = card;
+        return;
+    }
+
+    secondCard = card;
+    moves++;
+    gameMoves.textContent = `حرکت‌ها: ${moves}`;
+
+    if (firstCard.dataset.pair === secondCard.dataset.pair) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+        matchedPairs++;
+        gamePairs.textContent = `جفت‌ها: ${matchedPairs} از ۳`;
+        gameMessage.textContent = matchedPairs === 3
+            ? "همه‌ی جفت‌ها پیدا شد؛ قلبت برنده شد ❤️"
+            : "این جفت مال قصه‌ی ما بود ✨";
+        firstCard = null;
+        secondCard = null;
+        return;
+    }
+
+    gameLocked = true;
+    gameMessage.textContent = "این دوتا هنوز جفت نشدن؛ دوباره امتحان کن :)";
+
+    setTimeout(() => {
+        firstCard.classList.remove("flipped");
+        secondCard.classList.remove("flipped");
+        firstCard = null;
+        secondCard = null;
+        gameLocked = false;
+    }, 750);
+}
+
+
+gameBtn.addEventListener("click", () => {
+
+    showPage(gamePage);
+    createGameBoard();
+});
+
+
+gameReset.addEventListener("click", createGameBoard);
+
+
+backFromGame.addEventListener("click", () => {
+
+    showPage(homePage);
+});
+
+
+mondayBtn.addEventListener("click", () => {
+
+    showPage(mondayPage);
+    mondayStops.forEach(stop => stop.classList.remove("visited"));
+    mondayMessage.textContent = "هر مرحله رو لمس کن تا خاطره باز بشه.";
+});
+
+
+mondayStops.forEach(stop => {
+
+    stop.addEventListener("click", () => {
+
+        stop.classList.add("visited");
+        mondayMessage.textContent = stop.dataset.memory;
+    });
+});
+
+
+fridayBtn.addEventListener("click", () => {
+
+    showPage(fridayPage);
+    fridayChoices.forEach(choice => choice.classList.remove("chosen"));
+    fridayMessage.textContent = "یکی رو انتخاب کن تا پیام جمعه باز بشه ✨";
+});
+
+
+fridayChoices.forEach(choice => {
+
+    choice.addEventListener("click", () => {
+
+        fridayChoices.forEach(item => item.classList.remove("chosen"));
+        choice.classList.add("chosen");
+        fridayMessage.textContent = choice.dataset.memory;
+    });
+});
+
+
+backFromMonday.addEventListener("click", () => {
+
+    showPage(homePage);
+});
+
+
+backFromFriday.addEventListener("click", () => {
+
+    showPage(homePage);
+});
+
+
+repairChoices.forEach(choice => {
+
+    choice.addEventListener("click", () => {
+
+        choice.classList.toggle("selected");
+
+        const selectedCount = document.querySelectorAll(
+            ".repair-choice.selected"
+        ).length;
+
+        repairAction.disabled = selectedCount === 0;
+        repairAction.textContent = selectedCount === repairChoices.length
+            ? "آشتی کامل شد، بزن بریم ❤️"
+            : `${selectedCount} قدم از ۳ قدم آماده‌ست ✨`;
+
+        repairMessage.textContent = selectedCount === 0
+            ? "هنوز هیچ تکه‌ای انتخاب نشده..."
+            : `✓ ${choice.dataset.repair}`;
+    });
+});
+
+
+repairAction.addEventListener("click", () => {
+
+    if (repairAction.disabled) {
+        return;
+    }
+
+    showPage(yesPage);
+
+    yesCard.classList.remove("revealed");
+
+    requestAnimationFrame(() => {
+        yesCard.classList.add("revealed");
+    });
+
+    createHeartExplosion();
+});
+
 
 backFromQuestion.addEventListener("click", () => {
 
@@ -159,32 +441,20 @@ backFromQuestion.addEventListener("click", () => {
 backFromSurprise.addEventListener("click", () => {
 
     showPage(homePage);
-
-    stopHeartAnimation();
 });
 
 
 backFromLetter.addEventListener("click", () => {
 
     showPage(homePage);
-
     letterPage.classList.remove("letter-active");
     letterHearts.replaceChildren();
-});
-
-
-backFromYes.addEventListener("click", () => {
-
-    showPage(homePage);
-
-    yesCard.classList.remove("revealed");
 });
 
 
 backFromReasons.addEventListener("click", () => {
 
     showPage(homePage);
-
     reasonsPage.classList.remove("reasons-active");
 });
 
@@ -192,38 +462,21 @@ backFromReasons.addEventListener("click", () => {
 backFromMoments.addEventListener("click", () => {
 
     showPage(homePage);
-
     momentsPage.classList.remove("moments-active");
-});
-
-
-const wishes = [
-    "آرزو می‌کنم دوشنبه شروع کلی خاطره‌ی قشنگ باشه ❤️",
-    "آرزو می‌کنم همیشه کنار هم راحت بخندیم :) ",
-    "آرزو می‌کنم هر بار دیدنت، از بار قبل قشنگ‌تر باشه.",
-    "آرزو می‌کنم قصه‌ی ما پر از قرارهای ساده و دوست‌داشتنی بشه."
-];
-
-let wishIndex = 0;
-
-makeWishBtn.addEventListener("click", () => {
-
-    wishText.classList.remove("wish-visible");
-
-    wishIndex = (wishIndex + 1) % wishes.length;
-
-    setTimeout(() => {
-        wishText.textContent = wishes[wishIndex];
-        wishText.classList.add("wish-visible");
-    }, 180);
 });
 
 
 backFromWish.addEventListener("click", () => {
 
     showPage(homePage);
-
     wishPage.classList.remove("wish-active");
+});
+
+
+backFromYes.addEventListener("click", () => {
+
+    showPage(homePage);
+    yesCard.classList.remove("revealed");
 });
 
 
@@ -238,220 +491,22 @@ function createLetterHearts() {
         heart.className = "letter-heart";
         heart.textContent = Math.random() > 0.25 ? "♥" : "♡";
 
-        heart.style.setProperty(
-            "--heart-x",
-            `${Math.random() * 76 - 38}vw`
-        );
-
-        heart.style.setProperty(
-            "--heart-size",
-            `${22 + Math.random() * 27}px`
-        );
-
-        heart.style.setProperty(
-            "--heart-delay",
-            `${2.4 + Math.random() * 1.8}s`
-        );
-
-        heart.style.setProperty(
-            "--heart-duration",
-            `${5.8 + Math.random() * 2.8}s`
-        );
-
-        heart.style.setProperty(
-            "--heart-drift-a",
-            `${-34 + Math.random() * 20}px`
-        );
-
-        heart.style.setProperty(
-            "--heart-drift-b",
-            `${8 + Math.random() * 45}px`
-        );
-
-        heart.style.setProperty(
-            "--heart-drift-c",
-            `${-20 + Math.random() * 40}px`
-        );
+        heart.style.setProperty("--heart-x", `${Math.random() * 76 - 38}vw`);
+        heart.style.setProperty("--heart-size", `${22 + Math.random() * 27}px`);
+        heart.style.setProperty("--heart-delay", `${2.4 + Math.random() * 1.8}s`);
+        heart.style.setProperty("--heart-duration", `${5.8 + Math.random() * 2.8}s`);
+        heart.style.setProperty("--heart-drift-a", `${-34 + Math.random() * 20}px`);
+        heart.style.setProperty("--heart-drift-b", `${8 + Math.random() * 45}px`);
+        heart.style.setProperty("--heart-drift-c", `${-20 + Math.random() * 40}px`);
 
         letterHearts.appendChild(heart);
     }
 }
 
-
 backFromPromise.addEventListener("click", () => {
 
     showPage(homePage);
 });
-
-
-/* =====================================================
-   YES
-===================================================== */
-
-yesBtn.addEventListener("click", () => {
-
-    showPage(yesPage);
-
-    yesCard.classList.remove("revealed");
-
-    requestAnimationFrame(() => {
-        yesCard.classList.add("revealed");
-    });
-
-    createHeartExplosion();
-});
-
-
-/* =====================================================
-   NO BUTTON
-===================================================== */
-
-let noAttempts = 0;
-
-const messages = [
-    "مطمئنی؟ 🥺",
-    "یه بار دیگه فکر کن...",
-    "واقعاً نه؟ 😭",
-    "این جواب رو قبول ندارم 😂",
-    "دوباره امتحان کن :)",
-    "نه که نمیشه 😌",
-    "این دکمه امروز کار نمی‌کنه ❤️"
-];
-
-
-function moveNoButton() {
-
-    noAttempts++;
-
-    const buttonWidth = noBtn.offsetWidth;
-    const buttonHeight = noBtn.offsetHeight;
-
-    const isMobile = window.matchMedia("(max-width: 600px)").matches;
-    const margin = isMobile ? 16 : 24;
-
-    const minX = isMobile
-        ? Math.max(margin, window.innerWidth * 0.12)
-        : margin;
-
-    const maxX = isMobile
-        ? Math.min(
-            window.innerWidth - buttonWidth - margin,
-            window.innerWidth * 0.88 - buttonWidth
-        )
-        : window.innerWidth - buttonWidth - margin;
-
-    const minY = isMobile
-        ? Math.min(150, window.innerHeight * 0.22)
-        : margin;
-
-    const maxY = isMobile
-        ? Math.max(
-            minY,
-            Math.min(
-                window.innerHeight - buttonHeight - margin,
-                window.innerHeight * 0.72
-            )
-        )
-        : window.innerHeight - buttonHeight - margin;
-
-    let x =
-        Math.random() *
-        (maxX - minX) +
-        minX;
-
-    let y =
-        Math.random() *
-        (maxY - minY) +
-        minY;
-
-
-    /*
-       روی موبایل مطمئن می‌شویم
-       دکمه از صفحه خارج نشود.
-    */
-
-    x = Math.max(
-        minX,
-        Math.min(x, maxX)
-    );
-
-    y = Math.max(
-        minY,
-        Math.min(y, maxY)
-    );
-
-
-    noBtn.style.position = "fixed";
-
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-
-    noBtn.style.zIndex = "1000";
-
-    noMessage.textContent =
-        messages[
-            Math.min(
-                noAttempts - 1,
-                messages.length - 1
-            )
-        ];
-}
-
-
-/*
-   روی کامپیوتر:
-   وقتی موس نزدیک می‌شود فرار می‌کند.
-*/
-
-noBtn.addEventListener("mouseenter", () => {
-
-    moveNoButton();
-});
-
-
-/*
-   روی موبایل:
-   وقتی انگشت می‌خواهد آن را لمس کند،
-   جابه‌جا می‌شود.
-*/
-
-noBtn.addEventListener(
-    "touchstart",
-    (event) => {
-
-        event.preventDefault();
-
-        moveNoButton();
-    },
-    {
-        passive: false
-    }
-);
-
-
-/*
-   اگر somehow روی دکمه کلیک شد،
-   باز هم فرار کند.
-*/
-
-noBtn.addEventListener("click", (event) => {
-
-    event.preventDefault();
-
-    moveNoButton();
-});
-
-
-function resetNoButton() {
-
-    noAttempts = 0;
-
-    noBtn.style.position = "";
-    noBtn.style.left = "";
-    noBtn.style.top = "";
-
-    noMessage.textContent = "";
-}
 
 
 /* =====================================================

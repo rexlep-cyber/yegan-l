@@ -38,17 +38,17 @@
 
             <div class="small-heart">♡</div>
 
-            <p class="eyebrow">یه چیز کوچیک برات آماده کردم...</p>
+            <p class="eyebrow">بخش‌های قبلی رو برات ساختم؛ اما امروز...</p>
 
             <h1>
                 یگانه،
                 <br>
-                یه انتخاب با تو دارم ❤️
+                نوبت اتاق آشتی ماست ❤️
             </h1>
 
             <p class="description">
-                فقط قول بده قبل از انتخاب،
-                تا آخرش رو ببینی :)
+                این بخش مخصوص امروز ساخته شده؛
+                بقیه‌ی قصه‌هامون هم سر جاشون منتظرن :)
             </p>
 
             <div class="buttons home-actions">
@@ -64,45 +64,201 @@
                     class="btn secondary"
                     id="dateBtn"
                     type="button">
-                    با من میای بیرون؟ ❤️
+                    اتاق آشتی ما 🫶
                 </button>
 
                 <button
-                    class="btn secondary"
-                    id="letterBtn"
-                    type="button">
-                    💌 یه نامه برای تو
+                    class="btn secondary archive-toggle"
+                    id="archiveBtn"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="archiveMenu">
+                    📚 بخش‌های قبلی
                 </button>
 
-                <button
-                    class="btn secondary"
-                    id="promiseBtn"
-                    type="button">
-                    ✨ یه قول کوچیک
-                </button>
+                <div class="archive-menu" id="archiveMenu" hidden>
+
+                    <button
+                        class="btn secondary"
+                        id="letterBtn"
+                        type="button">
+                        💌 یه نامه برای تو
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="promiseBtn"
+                        type="button">
+                        ✨ یه قول کوچیک
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="reasonsBtn"
+                        type="button">
+                        💗 سه دلیل دوست‌داشتنت
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="momentsBtn"
+                        type="button">
+                        🌙 قرارمان در سه لحظه
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="wishBtn"
+                        type="button">
+                        💫 یه آرزو برای ما
+                    </button>
+
+                </div>
 
                 <button
-                    class="btn secondary"
-                    id="reasonsBtn"
-                    type="button">
-                    💗 سه دلیل دوست‌داشتنت
+                    class="btn secondary new-sections-toggle"
+                    id="gameBtn"
+                    type="button"
+                    >
+                    🎴 بازی جفت قلب‌ها
                 </button>
 
-                <button
-                    class="btn secondary"
-                    id="momentsBtn"
-                    type="button">
-                    🌙 قرارمان در سه لحظه
+                <button class="btn secondary memory-btn" id="mondayBtn" type="button">
+                    🏍️ دوشنبه‌ی موتور و شیرموز
                 </button>
 
-                <button
-                    class="btn secondary"
-                    id="wishBtn"
-                    type="button">
-                    💫 یه آرزو برای ما
+                <button class="btn secondary memory-btn" id="fridayBtn" type="button">
+                    ✨ جمعه‌ی خاص ما
                 </button>
 
             </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         بازی عاشقانه
+    ========================== -->
+
+    <main id="gamePage" class="page">
+
+        <div class="card game-card">
+
+            <div class="game-mark">♥</div>
+
+            <p class="eyebrow">بخش جدید پروژه</p>
+
+            <h2>جفت قلب‌ها</h2>
+
+            <p class="game-intro">
+                سه جفت قشنگ رو پیدا کن؛ هر جفت یک تکه از قصه‌ی ماست.
+            </p>
+
+            <div class="game-status" aria-live="polite">
+                <span id="gameMoves">حرکت‌ها: ۰</span>
+                <span id="gamePairs">جفت‌ها: ۰ از ۳</span>
+            </div>
+
+            <div class="memory-grid" id="memoryGrid"></div>
+
+            <p class="game-message" id="gameMessage" aria-live="polite">
+                دو کارت رو انتخاب کن ✨
+            </p>
+
+            <button class="btn primary game-reset" id="gameReset" type="button">
+                دوباره بازی کنیم 🔄
+            </button>
+
+            <button class="back-btn" id="backFromGame" type="button">
+                ← برگشت به اول
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         خاطره دوشنبه
+    ========================== -->
+
+    <main id="mondayPage" class="page">
+
+        <div class="card memory-card-page monday-card">
+
+            <div class="memory-page-mark">🏍️</div>
+
+            <p class="eyebrow">خاطره‌ی دوشنبه</p>
+
+            <h2>اولین دورِ دور با موتور</h2>
+
+            <p class="memory-page-intro">
+                یک موتور، دو نفر، یک شیرموز و شهری که آن شب قشنگ‌تر از همیشه بود.
+            </p>
+
+            <div class="route-stops" id="mondayStops">
+                <button class="route-stop" type="button" data-memory="اولین حرکت‌مون با موتور؛ ساده بود، ولی برای من خیلی خاص بود.">
+                    <span>۱</span><strong>راه افتادیم</strong>
+                </button>
+                <button class="route-stop" type="button" data-memory="کنار تو حتی مسیرهای معمولی هم شبیه یک ماجراجویی می‌شن.">
+                    <span>۲</span><strong>دور دور</strong>
+                </button>
+                <button class="route-stop" type="button" data-memory="شیرموز آن شب فقط شیرموز نبود؛ مزه‌ی یک خاطره‌ی تازه بود.">
+                    <span>۳</span><strong>شیرموز</strong>
+                </button>
+            </div>
+
+            <p class="memory-page-message" id="mondayMessage" aria-live="polite">
+                هر مرحله رو لمس کن تا خاطره باز بشه.
+            </p>
+
+            <button class="back-btn" id="backFromMonday" type="button">← برگشت به اول</button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         خاطره جمعه
+    ========================== -->
+
+    <main id="fridayPage" class="page">
+
+        <div class="card memory-card-page friday-card">
+
+            <div class="memory-page-mark">✦</div>
+
+            <p class="eyebrow">خاطره‌ی جمعه</p>
+
+            <h2>یک تجربه‌ی تازه کنار هم</h2>
+
+            <p class="memory-page-intro">
+                جمعه، یک چیز جدید را با هم تجربه کردیم؛ از آن لحظه‌هایی که باید نگه‌شان داشت.
+            </p>
+
+            <div class="friday-choices" id="fridayChoices">
+                <button class="friday-choice" type="button" data-memory="ما بلدیم از چیزهای تازه، خاطره‌های ماندگار بسازیم.">
+                    <span>کشف</span>
+                    <strong>چیز تازه</strong>
+                </button>
+                <button class="friday-choice" type="button" data-memory="قشنگ‌ترین قسمت تجربه، کنار تو بودنش بود.">
+                    <span>حس</span>
+                    <strong>کنار تو</strong>
+                </button>
+                <button class="friday-choice" type="button" data-memory="این فقط یک جمعه نبود؛ یک صفحه‌ی تازه از قصه‌ی ما بود.">
+                    <span>قصه</span>
+                    <strong>ادامه دارد</strong>
+                </button>
+            </div>
+
+            <p class="memory-page-message" id="fridayMessage" aria-live="polite">
+                یکی رو انتخاب کن تا پیام جمعه باز بشه ✨
+            </p>
+
+            <button class="back-btn" id="backFromFriday" type="button">← برگشت به اول</button>
 
         </div>
 
@@ -156,13 +312,13 @@
 
             <div class="note-mark" aria-hidden="true">☾</div>
 
-            <p class="eyebrow">یک قصه‌ی کوچک برای دوشنبه</p>
+                <p class="eyebrow">یک قصه‌ی کوچک برای بعد از دعوا</p>
 
             <h2>قرارمان در سه لحظه</h2>
 
             <div class="moments-list">
                 <p><strong>اول</strong><span>با یک لبخند و یک سلام ساده.</span></p>
-                <p><strong>بعد</strong><span>با کافه، هات‌چیپس و حرف‌هایی که تمام نمی‌شوند.</span></p>
+                <p><strong>بعد</strong><span>با یک نفس عمیق و حرف‌هایی که این بار آرام‌تر گفته می‌شوند.</span></p>
                 <p><strong>آخر</strong><span>با این حس قشنگ که باید دوباره همدیگر را ببینیم.</span></p>
             </div>
 
@@ -238,7 +394,7 @@
                 <br><br>
                 نمی‌دانم آینده چه قصه‌ای برایمان نوشته،
                 اما می‌دانم دلم می‌خواهد از همین لحظه‌های کوچک شروع کنیم؛
-                از یک کافه‌ی دنج، از حرف‌هایی که هنوز نگفته‌ایم،
+                از حرف‌هایی که هنوز نگفته‌ایم،
                 و از خنده‌هایی که قرار است با هم بسازیم.
                 فقط خواستم بدانی حضورت برای من خاص است.
             </p>
@@ -297,39 +453,35 @@
 
     <main id="questionPage" class="page">
 
-        <div class="card question-card">
+        <div class="card question-card repair-card">
 
-            <div class="big-heart">♥</div>
+            <div class="big-heart">♡</div>
 
-            <p class="eyebrow">یه سوال خیلی مهم...</p>
+            <p class="eyebrow">پرونده‌ی دعوا: در حال بررسی قلب‌ها</p>
 
-            <h2>
-                با من میای بیرون؟
-            </h2>
+            <h2>بیا آشتی کنیم؟</h2>
 
             <p class="description">
-                فقط یه جواب ساده می‌خوام :)
+                سه تکه‌ی گمشده‌ی آشتی رو انتخاب کن تا این دلخوری کوچیک جمع بشه.
             </p>
 
-            <div class="answer-area">
-
-                <button
-                    class="btn yes-btn"
-                    id="yesBtn"
-                    type="button">
-                    آره ❤️
+            <div class="repair-steps" id="repairSteps">
+                <button class="repair-choice" type="button" data-repair="بگیم چی شد، بدون قهر و لجبازی.">
+                    <span>۱</span> حرف بزنیم
                 </button>
-
-                <button
-                    class="btn no-btn"
-                    id="noBtn"
-                    type="button">
-                    نه
+                <button class="repair-choice" type="button" data-repair="حق داری ناراحت باشی؛ من اینجام که بشنوم.">
+                    <span>۲</span> گوش بدیم
                 </button>
-
+                <button class="repair-choice" type="button" data-repair="این دعوا قرار نیست از دوست داشتن‌مون بزرگ‌تر بشه.">
+                    <span>۳</span> دوباره انتخاب کنیم
+                </button>
             </div>
 
-            <p id="noMessage" class="no-message"></p>
+            <p id="repairMessage" class="repair-message" aria-live="polite">هنوز هیچ تکه‌ای انتخاب نشده...</p>
+
+            <button class="btn primary repair-action" id="repairAction" type="button" disabled>
+                ساختن پیام آشتی ✨
+            </button>
 
             <button
                 class="back-btn"
@@ -351,12 +503,51 @@
 
         <div class="surprise-content">
 
-            <canvas id="heartCanvas"></canvas>
+            <div class="surprise-card">
 
-            <div id="loveText" class="love-text">
-                <span>I LOVE YOU</span>
-                <strong>Yeganeh</strong>
+                <div class="surprise-symbol">✦</div>
+
+                <p class="eyebrow">یک چیز مخفی برای وقتی که دلت گرفت</p>
+
+                <h2>کپسول آشتی</h2>
+
+                <p class="surprise-intro">
+                    سه مهر کوچیک رو باز کن؛ آخرش یه پیام فقط برای تو داریم.
+                </p>
+
+                <div class="surprise-progress" id="surpriseProgress" aria-live="polite">
+                    ۰ از ۳ مهر باز شده
+                </div>
+
+                <div class="surprise-locks" id="surpriseLocks">
+                    <button class="surprise-lock" type="button" data-message="من هنوز حرف‌هات رو می‌شنوم.">
+                        <span>۱</span>
+                        <strong>گوش</strong>
+                    </button>
+                    <button class="surprise-lock" type="button" data-message="ناراحتی‌مون از دوست داشتن‌مون بزرگ‌تر نیست.">
+                        <span>۲</span>
+                        <strong>دل</strong>
+                    </button>
+                    <button class="surprise-lock" type="button" data-message="بیایم از همین‌جا آروم‌تر شروع کنیم.">
+                        <span>۳</span>
+                        <strong>شروع</strong>
+                    </button>
+                </div>
+
+                <p class="surprise-message" id="surpriseMessage" aria-live="polite">
+                    هنوز هیچ مهری باز نشده...
+                </p>
+
+                <div class="surprise-reveal" id="surpriseReveal" hidden>
+                    <span>پیام مخفی باز شد</span>
+                    <strong>دوست دارم تا ابد ❤️</strong>
+                </div>
+
             </div>
+
+            <canvas id="heartCanvas" hidden></canvas>
+
+            <div id="loveText" class="love-text" hidden></div>
 
             <button
                 id="backFromSurprise"
@@ -382,20 +573,20 @@
 
             <p class="eyebrow">برای دو نفر، یک قرار کوچک</p>
 
-            <h1>پس یه قرار داریم... ❤️</h1>
+            <h1>پس دوباره کنار همیم... ❤️</h1>
 
             <div class="date-details" aria-live="polite">
-                <p class="date-detail">دوشنبه</p>
-                <p class="date-detail">یه کافه دنج ☕️</p>
-                <p class="date-detail">هات‌چیپس با هم 🌶️❤️</p>
-                <p class="date-detail">و کلی حرف برای گفتن :)</p>
+                <p class="date-detail">دعوا تموم شد، نه دوست داشتن‌مون.</p>
+                <p class="date-detail">این بار با آرامش بیشتر حرف می‌زنیم.</p>
+                <p class="date-detail">هر دو نفرمون حق داریم شنیده بشیم.</p>
+                <p class="date-detail">از اینجا دوباره قشنگ شروع می‌کنیم :)</p>
             </div>
 
             <div class="divider"></div>
 
             <div class="final-message">
                 <strong>مرسی که گفتی آره ❤️</strong>
-                <span>دوشنبه منتظرتم :)</span>
+                <span>من هنوز اینجام، با یک دلِ نرم‌تر :)</span>
             </div>
 
             <div class="little-hearts" aria-hidden="true">♡　♥　♡</div>
