@@ -89,6 +89,31 @@ const backFromWish =
 const backFromYes =
     document.getElementById("backFromYes");
 
+const firstVisit = document.getElementById("firstVisit");
+const firstVisitClose = document.getElementById("firstVisitClose");
+
+const firstVisitStorageKey = "yeganeh-first-visit-notice-seen";
+
+function showFirstVisitNotice() {
+
+    if (localStorage.getItem(firstVisitStorageKey)) {
+        return;
+    }
+
+    firstVisit.hidden = false;
+    requestAnimationFrame(() => firstVisitClose.focus());
+}
+
+
+firstVisitClose.addEventListener("click", () => {
+
+    localStorage.setItem(firstVisitStorageKey, "true");
+    firstVisit.hidden = true;
+});
+
+
+showFirstVisitNotice();
+
 function showPage(page) {
 
     if (!page) {
