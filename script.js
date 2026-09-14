@@ -95,6 +95,8 @@ function showPage(page) {
         return;
     }
 
+    page.scrollTop = 0;
+
     document
         .querySelectorAll(".page")
         .forEach(p => p.classList.remove("active"));
@@ -176,6 +178,7 @@ privateBtn.addEventListener("click", () => {
 
     resetPrivateRoom();
     showPage(privatePage);
+    privatePage.scrollTop = 0;
     requestAnimationFrame(() => privatePassword.focus());
 });
 
@@ -438,6 +441,7 @@ mondayStops.forEach(stop => {
 
         stop.classList.add("visited");
         mondayMessage.textContent = stop.dataset.memory;
+        mondayMessage.scrollIntoView({ block: "nearest", behavior: "smooth" });
     });
 });
 
@@ -457,6 +461,7 @@ fridayChoices.forEach(choice => {
         fridayChoices.forEach(item => item.classList.remove("chosen"));
         choice.classList.add("chosen");
         fridayMessage.textContent = choice.dataset.memory;
+        fridayMessage.scrollIntoView({ block: "nearest", behavior: "smooth" });
     });
 });
 
