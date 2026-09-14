@@ -1291,6 +1291,37 @@ h2 {
     animation: revealDetail 0.9s ease 2.5s forwards;
 }
 
+.apology-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 22px;
+    padding: 16px 17px;
+    border: 1px solid #f0cbd4;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff7f8, #fff0f3);
+    color: #765861;
+    font-size: 14px;
+    line-height: 2;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.yes-card.revealed .apology-box {
+    animation: revealDetail 0.9s ease 3.05s forwards;
+}
+
+.apology-mark {
+    flex: 0 0 auto;
+    font-size: 24px;
+    line-height: 1.5;
+}
+
+.apology-box p {
+    flex: 1;
+}
+
 .final-message strong {
     color: #a34f66;
     font-size: 17px;
