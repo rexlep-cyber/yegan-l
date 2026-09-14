@@ -131,6 +131,10 @@
                     ✨ جمعه‌ی خاص ما
                 </button>
 
+                <button class="btn private-btn" id="privateBtn" type="button">
+                    🔐 اتاق محرمانه
+                </button>
+
             </div>
 
         </div>
@@ -555,6 +559,83 @@
                 type="button">
                 ← برگشت
             </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         اتاق محرمانه
+    ========================== -->
+
+    <main id="privatePage" class="page private-page">
+
+        <div class="private-shell">
+
+            <section class="private-gate" id="privateGate">
+                <div class="private-orbit" aria-hidden="true">✦</div>
+                <p class="eyebrow">فقط برای تو، فقط با رمز</p>
+                <h2>اتاق محرمانه</h2>
+                <p class="private-intro">
+                    اینجا جاییه که چند تکه‌ی مخفی از قصه‌مون منتظر باز شدنن.
+                </p>
+
+                <form class="password-form" id="passwordForm">
+                    <label for="privatePassword">رمز ورود</label>
+                    <input
+                        id="privatePassword"
+                        type="password"
+                        inputmode="numeric"
+                        maxlength="6"
+                        autocomplete="off"
+                        placeholder="••••••"
+                        aria-describedby="passwordMessage">
+                    <button class="btn primary" type="submit">باز کردن اتاق ✨</button>
+                </form>
+
+                <p class="password-message" id="passwordMessage" aria-live="polite">
+                    شش رقم مخصوص خودت رو وارد کن.
+                </p>
+
+                <button class="back-btn" id="backFromPrivate" type="button">← برگشت به اول</button>
+            </section>
+
+            <section class="private-room" id="privateRoom" hidden>
+                <div class="private-room-topline">
+                    <span>ACCESS GRANTED</span>
+                    <span>01:05:84</span>
+                </div>
+                <p class="eyebrow">محرمانه‌ترین بخش این قصه</p>
+                <h2>برای وقتی که دلت منو خواست</h2>
+                <p class="private-room-intro">
+                    اینجا سه در باز می‌شن؛ هر کدوم یک حس، یک تصویر و یک پیام پنهان برای تو داره.
+                </p>
+
+                <div class="secret-doors" id="secretDoors">
+                    <button class="secret-door" type="button" data-secret="وقتی می‌خندی، حتی روزهای سخت هم یک راه باریک برای روشن شدن پیدا می‌کنن.">
+                        <span>01</span><strong>نور تو</strong><small>یک جمله‌ی روشن</small>
+                    </button>
+                    <button class="secret-door" type="button" data-secret="من برای ساختن لحظه‌های ساده‌ای که بعداً دلمون براشون تنگ می‌شه، هنوز کلی ذوق دارم.">
+                        <span>02</span><strong>فردای ما</strong><small>یک قول کوچک</small>
+                    </button>
+                    <button class="secret-door" type="button" data-secret="اگر دوباره از اول انتخابت کنم، این بار هم با همان دلِ بی‌دفاع انتخابت می‌کنم.">
+                        <span>03</span><strong>انتخابت می‌کنم</strong><small>یک اعتراف آرام</small>
+                    </button>
+                </div>
+
+                <p class="secret-message" id="secretMessage" aria-live="polite">
+                    یکی از درها رو باز کن؛ این اتاق با عجله قشنگ نمی‌شه.
+                </p>
+
+                <div class="secret-final" id="secretFinal" hidden>
+                    <span>سه در باز شد</span>
+                    <strong>تو قشنگ‌ترین بخش این پروژه‌ای ❤️</strong>
+                    <button class="btn primary" id="secretReplay" type="button">دوباره از اول ببینیم</button>
+                </div>
+
+                <button class="back-btn" id="backFromPrivateRoom" type="button">← برگشت به اول</button>
+            </section>
 
         </div>
 

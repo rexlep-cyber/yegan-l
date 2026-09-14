@@ -5,6 +5,7 @@
 const homePage = document.getElementById("homePage");
 const questionPage = document.getElementById("questionPage");
 const surprisePage = document.getElementById("surprisePage");
+const privatePage = document.getElementById("privatePage");
 const yesPage = document.getElementById("yesPage");
 const letterPage = document.getElementById("letterPage");
 const promisePage = document.getElementById("promisePage");
@@ -50,6 +51,18 @@ const surpriseLocks = document.querySelectorAll(".surprise-lock");
 const surpriseMessage = document.getElementById("surpriseMessage");
 const surpriseProgress = document.getElementById("surpriseProgress");
 const surpriseReveal = document.getElementById("surpriseReveal");
+const privateBtn = document.getElementById("privateBtn");
+const privateGate = document.getElementById("privateGate");
+const privateRoom = document.getElementById("privateRoom");
+const passwordForm = document.getElementById("passwordForm");
+const privatePassword = document.getElementById("privatePassword");
+const passwordMessage = document.getElementById("passwordMessage");
+const secretDoors = document.querySelectorAll(".secret-door");
+const secretMessage = document.getElementById("secretMessage");
+const secretFinal = document.getElementById("secretFinal");
+const secretReplay = document.getElementById("secretReplay");
+const backFromPrivate = document.getElementById("backFromPrivate");
+const backFromPrivateRoom = document.getElementById("backFromPrivateRoom");
 
 
 const backFromQuestion =
@@ -77,6 +90,10 @@ const backFromYes =
     document.getElementById("backFromYes");
 
 function showPage(page) {
+
+    if (!page) {
+        return;
+    }
 
     document
         .querySelectorAll(".page")
@@ -133,6 +150,70 @@ dateBtn.addEventListener("click", () => {
     repairAction.disabled = true;
     repairAction.textContent = "اولین قدم آشتی ✨";
     repairMessage.textContent = "هنوز هیچ تکه‌ای انتخاب نشده...";
+});
+
+
+/* =====================================================
+   Private Room
+===================================================== */
+
+const privatePasscode = "010584";
+
+function resetPrivateRoom() {
+
+    privateGate.hidden = false;
+    privateRoom.hidden = true;
+    privatePassword.value = "";
+    passwordMessage.textContent = "شش رقم مخصوص خودت رو وارد کن.";
+    passwordMessage.className = "password-message";
+    secretDoors.forEach(door => door.classList.remove("opened"));
+    secretMessage.textContent = "یکی از درها رو باز کن؛ این اتاق با عجله قشنگ نمی‌شه.";
+    secretFinal.hidden = true;
+}
+
+
+privateBtn.addEventListener("click", () => {
+
+    resetPrivateRoom();
+    showPage(privatePage);
+    requestAnimationFrame(() => privatePassword.focus());
+});
+
+
+passwordForm.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    if (privatePassword.value !== privatePasscode) {
+        passwordMessage.textContent = "این رمز درست نیست؛ دوباره با حوصله امتحان کن.";
+        passwordMessage.className = "password-message is-error";
+        privatePassword.select();
+        return;
+    }
+
+    privateGate.hidden = true;
+    privateRoom.hidden = false;
+    passwordMessage.className = "password-message is-success";
+});
+
+
+secretDoors.forEach(door => {
+
+    door.addEventListener("click", () => {
+
+        door.classList.add("opened");
+        const openedCount = document.querySelectorAll(".secret-door.opened").length;
+        secretMessage.textContent = `${door.dataset.secret} (${openedCount} از ۳ در باز شد)`;
+        secretFinal.hidden = openedCount !== secretDoors.length;
+    });
+});
+
+
+secretReplay.addEventListener("click", () => {
+
+    secretDoors.forEach(door => door.classList.remove("opened"));
+    secretMessage.textContent = "یکی از درها رو باز کن؛ این اتاق با عجله قشنگ نمی‌شه.";
+    secretFinal.hidden = true;
 });
 
 
@@ -439,6 +520,18 @@ backFromQuestion.addEventListener("click", () => {
 
 
 backFromSurprise.addEventListener("click", () => {
+
+    showPage(homePage);
+});
+
+
+backFromPrivate.addEventListener("click", () => {
+
+    showPage(homePage);
+});
+
+
+backFromPrivateRoom.addEventListener("click", () => {
 
     showPage(homePage);
 });
