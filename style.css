@@ -433,6 +433,42 @@ h2 {
     margin: 24px auto;
 }
 
+.home-letter-card {
+    width: min(100%, 680px);
+    padding: clamp(28px, 6vw, 52px) clamp(20px, 6vw, 58px);
+    background: rgba(255, 251, 250, 0.94);
+}
+
+.home-letter {
+    color: #684f57;
+    font-size: clamp(15px, 2.4vw, 17px);
+    line-height: 2.25;
+    text-align: right;
+}
+
+.home-letter p + p {
+    margin-top: 18px;
+}
+
+.home-letter-photo {
+    display: block;
+    width: min(100%, 430px);
+    max-height: 520px;
+    margin: 28px auto 0;
+    border: 7px solid #fff;
+    border-radius: 22px;
+    object-fit: cover;
+    box-shadow: 0 16px 32px rgba(104, 35, 52, 0.14);
+}
+
+.home-actions {
+    margin-top: 30px;
+}
+
+.home-actions > .archive-toggle {
+    width: 100%;
+}
+
 .note-mark {
     display: grid;
     place-items: center;
@@ -2094,5 +2130,276 @@ h2 {
         min-height: 62px;
         margin-top: 14px;
         font-size: 13px;
+    }
+}
+
+/* =====================================================
+   Night Letter Theme
+===================================================== */
+
+:root {
+    --ink: #101719;
+    --ink-soft: #1a2527;
+    --paper: #f3ecdf;
+    --paper-deep: #e9decd;
+    --rust: #c97845;
+    --rust-dark: #9d5234;
+    --sage: #8ea59a;
+    --text: #253335;
+    --muted: #687574;
+    --line: rgba(37, 51, 53, 0.16);
+}
+
+html {
+    background: var(--ink);
+}
+
+body {
+    background:
+        radial-gradient(circle at 12% 12%, rgba(201, 120, 69, 0.15), transparent 26%),
+        radial-gradient(circle at 88% 82%, rgba(142, 165, 154, 0.13), transparent 30%),
+        linear-gradient(135deg, #101719 0%, #172224 52%, #0d1214 100%);
+    color: var(--text);
+}
+
+body::before {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+    content: "";
+    pointer-events: none;
+}
+
+.page {
+    padding: clamp(16px, 4vw, 42px);
+}
+
+.card,
+.home-letter-card {
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 6px;
+    background: var(--paper);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28), 0 2px 0 rgba(255, 255, 255, 0.32) inset;
+    backdrop-filter: none;
+}
+
+.home-letter-card {
+    width: min(100%, 760px);
+    padding: clamp(30px, 7vw, 72px) clamp(22px, 8vw, 82px);
+}
+
+.home-letter {
+    color: var(--text);
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 2.35;
+}
+
+.home-letter::before {
+    display: block;
+    width: 54px;
+    height: 4px;
+    margin-bottom: 30px;
+    border-radius: 0;
+    background: var(--rust);
+    content: "";
+}
+
+.home-letter p + p {
+    margin-top: 23px;
+}
+
+.home-letter-photo {
+    width: min(100%, 460px);
+    margin-top: 34px;
+    border: 9px solid #fbf7ef;
+    border-radius: 3px;
+    box-shadow: 0 20px 35px rgba(28, 38, 38, 0.2);
+    filter: saturate(0.86) contrast(1.03);
+}
+
+.home-actions {
+    gap: 12px;
+    margin-top: 34px;
+}
+
+.btn {
+    min-height: 54px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    font-size: 14px;
+    letter-spacing: 0;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.primary,
+.memory-card-back {
+    background: var(--rust);
+    box-shadow: 0 10px 20px rgba(157, 82, 52, 0.2);
+}
+
+.primary:hover {
+    background: var(--rust-dark);
+}
+
+.secondary,
+.private-btn {
+    border-color: rgba(37, 51, 53, 0.2);
+    background: var(--paper-deep);
+    color: var(--ink-soft);
+}
+
+.secondary:hover,
+.private-btn:hover {
+    background: #dfd0bb;
+}
+
+.archive-toggle {
+    border-color: var(--rust);
+    background: transparent;
+    color: var(--rust-dark);
+}
+
+.archive-menu {
+    gap: 9px;
+    padding: 13px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(233, 222, 205, 0.74);
+}
+
+.eyebrow,
+.today-label,
+.game-status,
+.game-message,
+.memory-page-message,
+.note-signature {
+    color: var(--rust-dark);
+}
+
+h1,
+h2,
+.note-card h2,
+.yes-card h1 {
+    font-family: "Noto Serif Arabic", serif;
+    color: var(--ink);
+    letter-spacing: 0;
+}
+
+.description,
+.note-text,
+.game-intro,
+.memory-page-intro,
+.wish-text {
+    color: var(--muted);
+}
+
+.note-mark,
+.game-mark,
+.memory-page-mark,
+.small-heart {
+    width: 58px;
+    height: 58px;
+    border-radius: 3px;
+    background: var(--ink);
+    color: #e1a06c;
+    transform: rotate(3deg);
+}
+
+.back-btn {
+    color: var(--rust-dark);
+}
+
+.back-btn:hover {
+    color: var(--ink);
+}
+
+.route-stop,
+.friday-choice,
+.repair-choice,
+.promise-list p,
+.reasons-list p,
+.moments-list p,
+.memory-page-message,
+.apology-box,
+.flower-note {
+    border-color: var(--line);
+    border-radius: 3px;
+    background: rgba(233, 222, 205, 0.6);
+    color: var(--text);
+}
+
+.route-stop span,
+.repair-choice span,
+.friday-choice span {
+    background: var(--ink);
+    color: #e1a06c;
+}
+
+.route-stop:hover,
+.route-stop.visited,
+.repair-choice:hover,
+.friday-choice:hover,
+.friday-choice.chosen {
+    border-color: var(--rust);
+    background: rgba(201, 120, 69, 0.14);
+    color: var(--ink);
+}
+
+.floating-hearts span {
+    color: rgba(201, 120, 69, 0.2);
+}
+
+.surprise-page,
+.private-page {
+    background:
+        radial-gradient(circle at 50% 16%, rgba(201, 120, 69, 0.18), transparent 30%),
+        linear-gradient(135deg, #101719, #182426);
+}
+
+.surprise-card,
+.private-gate,
+.private-room {
+    border: 1px solid rgba(201, 160, 112, 0.34);
+    border-radius: 5px;
+    background: rgba(20, 30, 32, 0.96);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
+}
+
+.surprise-card h2,
+.private-page h2,
+.private-room h2 {
+    font-family: "Noto Serif Arabic", serif;
+}
+
+.surprise-lock,
+.secret-door {
+    border-radius: 3px;
+    border-color: rgba(201, 160, 112, 0.28);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.memory-card-front {
+    border-color: var(--rust);
+    background: var(--paper-deep);
+    color: var(--rust-dark);
+}
+
+.memory-card-back {
+    border-color: var(--rust);
+}
+
+@media (max-width: 480px) {
+    .home-letter-card {
+        padding: 30px 22px;
+    }
+
+    .home-letter {
+        font-size: 15px;
+        line-height: 2.2;
     }
 }
