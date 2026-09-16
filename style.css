@@ -2211,7 +2211,10 @@ body::before {
 }
 
 .home-letter-photo {
+    display: block;
     width: min(100%, 460px);
+    max-width: 100%;
+    height: auto;
     margin-top: 34px;
     border: 9px solid #fbf7ef;
     border-radius: 3px;
@@ -2401,5 +2404,12 @@ h2,
     .home-letter {
         font-size: 15px;
         line-height: 2.2;
+    }
+
+    .home-letter-photo {
+        width: 100%;
+        max-height: none;
+        margin-top: 26px;
+        border-width: 6px;
     }
 }
