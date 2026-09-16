@@ -2212,8 +2212,8 @@ body::before {
 
 .home-letter-photo {
     display: block;
-    width: min(100%, 460px);
-    max-width: 100%;
+    width: min(100%, 280px);
+    max-width: 70%;
     height: auto;
     margin-top: 34px;
     border: 9px solid #fbf7ef;
@@ -2407,7 +2407,8 @@ h2,
     }
 
     .home-letter-photo {
-        width: 100%;
+        width: 210px;
+        max-width: 70%;
         max-height: none;
         margin-top: 26px;
         border-width: 6px;
