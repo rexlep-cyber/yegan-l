@@ -2,7 +2,17 @@
    Page Navigation
 ===================================================== */
 
+const welcomePage = document.getElementById("welcomePage");
+const girlsDayPage = document.getElementById("girlsDayPage");
 const homePage = document.getElementById("homePage");
+const archiveLetterPage = document.getElementById("archiveLetterPage");
+const girlsDayBtn = document.getElementById("girlsDayBtn");
+const openArchiveBtn = document.getElementById("openArchiveBtn");
+const backFromGirlsDay = document.getElementById("backFromGirlsDay");
+const backToWelcome = document.getElementById("backToWelcome");
+const archiveLetterBtn = document.getElementById("archiveLetterBtn");
+const backFromArchiveLetter = document.getElementById("backFromArchiveLetter");
+const loveHeartCanvas = document.getElementById("loveHeartCanvas");
 const questionPage = document.getElementById("questionPage");
 const surprisePage = document.getElementById("surprisePage");
 const privatePage = document.getElementById("privatePage");
@@ -22,8 +32,6 @@ const promiseBtn = document.getElementById("promiseBtn");
 const reasonsBtn = document.getElementById("reasonsBtn");
 const momentsBtn = document.getElementById("momentsBtn");
 const wishBtn = document.getElementById("wishBtn");
-const archiveBtn = document.getElementById("archiveBtn");
-const archiveMenu = document.getElementById("archiveMenu");
 const gameBtn = document.getElementById("gameBtn");
 const gamePage = document.getElementById("gamePage");
 const memoryGrid = document.getElementById("memoryGrid");
@@ -103,6 +111,32 @@ function showPage(page) {
 
     page.classList.add("active");
 }
+
+
+girlsDayBtn.addEventListener("click", () => {
+    showPage(girlsDayPage);
+    startLoveHeart();
+});
+
+openArchiveBtn.addEventListener("click", () => {
+    showPage(homePage);
+});
+
+backFromGirlsDay.addEventListener("click", () => {
+    showPage(welcomePage);
+});
+
+backToWelcome.addEventListener("click", () => {
+    showPage(welcomePage);
+});
+
+archiveLetterBtn.addEventListener("click", () => {
+    showPage(archiveLetterPage);
+});
+
+backFromArchiveLetter.addEventListener("click", () => {
+    showPage(homePage);
+});
 
 
 /* =====================================================
@@ -217,18 +251,6 @@ secretReplay.addEventListener("click", () => {
     secretDoors.forEach(door => door.classList.remove("opened"));
     secretMessage.textContent = "یکی از درها رو باز کن؛ این اتاق با عجله قشنگ نمی‌شه.";
     secretFinal.hidden = true;
-});
-
-
-archiveBtn.addEventListener("click", () => {
-
-    const isOpen = !archiveMenu.hidden;
-
-    archiveMenu.hidden = isOpen;
-    archiveBtn.setAttribute("aria-expanded", String(!isOpen));
-    archiveBtn.textContent = isOpen
-        ? "📚 بخش‌های قبلی"
-        : "✕ بستن بخش‌های قبلی";
 });
 
 
@@ -1248,6 +1270,180 @@ function createHeartExplosion() {
         }, 1300);
     }
 }
+
+
+/* =====================================================
+   Multilingual Love Heart
+===================================================== */
+
+const lovePhrases = [
+    "دوستت دارم", "I love you", "Seni seviyorum", "Te amo",
+    "Je t'aime", "Ich liebe dich", "Ti amo", "Eu te amo",
+    "Я тебя люблю", "사랑해", "愛してる", "我爱你",
+    "मैं तुमसे प्यार करती हूँ", "Σ' αγαπώ", "Ik hou van jou",
+    "Jag älskar dig", "Kocham cię", "ฉันรักคุณ", "Anh yêu em",
+    "Aku cinta kamu", "Я тебе кохаю", "Te iubesc", "Rakastan sinua",
+    "Jeg elsker deg"
+];
+
+let loveHeartFrame;
+let loveHeartStartedAt = 0;
+let loveHeartEntries = [];
+let loveHeartPath;
+
+function buildLoveHeart() {
+    const context = loveHeartCanvas.getContext("2d");
+    const width = loveHeartCanvas.clientWidth;
+    const height = loveHeartCanvas.clientHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+    if (!context || !width || !height) {
+        return;
+    }
+
+    loveHeartCanvas.width = Math.round(width * pixelRatio);
+    loveHeartCanvas.height = Math.round(height * pixelRatio);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const scale = Math.min(width * 0.44 / 16, height * 0.44 / 17);
+    const heartPath = new Path2D();
+    let firstPoint = true;
+
+    for (let step = 0; step <= 720; step += 1) {
+        const angle = (step / 720) * Math.PI * 2;
+        const x = centerX + 16 * Math.pow(Math.sin(angle), 3) * scale;
+        const y = centerY - (
+            13 * Math.cos(angle)
+            - 5 * Math.cos(2 * angle)
+            - 2 * Math.cos(3 * angle)
+            - Math.cos(4 * angle)
+        ) * scale;
+        if (firstPoint) {
+            heartPath.moveTo(x, y);
+            firstPoint = false;
+        } else {
+            heartPath.lineTo(x, y);
+        }
+    }
+    heartPath.closePath();
+    loveHeartPath = heartPath;
+
+    const lineHeight = width < 420 ? 15 : 17;
+    const rows = [];
+    let phraseIndex = Math.floor(Math.random() * lovePhrases.length);
+    context.font = `600 ${width < 420 ? 12 : 14}px "Noto Serif Arabic", "Vazirmatn", serif`;
+
+    for (let y = centerY - 17 * scale + lineHeight; y < centerY + 17 * scale; y += lineHeight) {
+        let text = "";
+        let textWidth = 0;
+        let guard = 0;
+
+        while (textWidth < width * 1.4 && guard < lovePhrases.length * 3) {
+            const phrase = lovePhrases[phraseIndex];
+            phraseIndex = (phraseIndex + 1) % lovePhrases.length;
+            const segment = `${phrase}   `;
+            text += segment;
+            textWidth += context.measureText(segment).width;
+            guard += 1;
+        }
+
+        rows.push({
+            text,
+            y,
+            delay: ((y - (centerY - 17 * scale)) / (34 * scale)) * 9200,
+            offset: Math.random() * 22 - 11
+        });
+    }
+
+    loveHeartEntries = rows;
+    loveHeartStartedAt = performance.now();
+}
+
+function drawLoveHeart(now) {
+    if (!girlsDayPage.classList.contains("active")) {
+        return;
+    }
+
+    const context = loveHeartCanvas.getContext("2d");
+    const width = loveHeartCanvas.clientWidth;
+    const height = loveHeartCanvas.clientHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    context.clearRect(0, 0, width, height);
+
+    context.fillStyle = "#07070b";
+    context.fillRect(0, 0, width, height);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const scale = Math.min(width * 0.44 / 16, height * 0.44 / 17);
+    const gradient = context.createLinearGradient(
+        centerX - 16 * scale,
+        centerY - 13 * scale,
+        centerX + 16 * scale,
+        centerY + 17 * scale
+    );
+    gradient.addColorStop(0, "#35101f");
+    gradient.addColorStop(0.52, "#160b16");
+    gradient.addColorStop(1, "#3a0c20");
+
+    context.save();
+    context.shadowColor = "rgba(238, 72, 126, 0.42)";
+    context.shadowBlur = 26;
+    context.fillStyle = gradient;
+    context.fill(loveHeartPath);
+    context.restore();
+
+    context.save();
+    context.clip(loveHeartPath);
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillStyle = "#fff9fc";
+    context.shadowColor = "rgba(255, 248, 252, 0.12)";
+    context.shadowBlur = 1.5;
+
+    loveHeartEntries.forEach(row => {
+        const progress = Math.max(
+            0,
+            Math.min(1, (now - loveHeartStartedAt - row.delay) / 720)
+        );
+        if (!progress) {
+            return;
+        }
+
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const shimmer = Math.sin((now / 700) + row.y) > 0.985;
+        context.globalAlpha = 0.25 + eased * 0.75;
+        context.font = `600 ${width < 420 ? 12 : 14}px "Noto Serif Arabic", "Vazirmatn", serif`;
+        if (shimmer) {
+            context.shadowColor = "rgba(255, 206, 230, 0.42)";
+            context.shadowBlur = 3;
+        } else {
+            context.shadowColor = "rgba(255, 248, 252, 0.12)";
+            context.shadowBlur = 1.5;
+        }
+        context.fillText(row.text, width / 2 + row.offset * (1 - eased), row.y - 32 * (1 - eased));
+    });
+    context.restore();
+
+    context.globalAlpha = 1;
+    context.shadowBlur = 0;
+    loveHeartFrame = requestAnimationFrame(drawLoveHeart);
+}
+
+function startLoveHeart() {
+    cancelAnimationFrame(loveHeartFrame);
+    buildLoveHeart();
+    loveHeartFrame = requestAnimationFrame(drawLoveHeart);
+}
+
+window.addEventListener("resize", () => {
+    if (girlsDayPage.classList.contains("active")) {
+        startLoveHeart();
+    }
+});
 
 
 /* =====================================================

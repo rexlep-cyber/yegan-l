@@ -981,6 +981,98 @@ h2 {
     }
 }
 
+/* =====================================================
+   Girl's Day welcome and multilingual heart
+===================================================== */
+
+.welcome-card,
+.girls-day-card {
+    width: min(100%, 760px);
+    padding: clamp(28px, 7vw, 64px);
+}
+
+.welcome-mark {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 22px;
+    border: 1px solid var(--line, rgba(157, 82, 52, 0.25));
+    border-radius: 50%;
+    color: var(--rust, #9d5234);
+    font-size: 44px;
+    animation: heartbeat 1.7s ease-in-out infinite;
+}
+
+.welcome-card .eyebrow,
+.girls-day-card .eyebrow {
+    margin-bottom: 12px;
+}
+
+.welcome-card h1 {
+    font-size: clamp(30px, 7vw, 48px);
+}
+
+.welcome-actions {
+    display: grid;
+    gap: 12px;
+    width: min(100%, 390px);
+    margin: 30px auto 0;
+}
+
+.welcome-actions .btn {
+    min-height: 58px;
+}
+
+.girls-day-page {
+    background: radial-gradient(ellipse at center, rgba(112, 15, 43, 0.24), transparent 70%);
+}
+
+.girls-day-card {
+    width: min(100%, 680px);
+    padding: clamp(24px, 5vw, 42px);
+}
+
+.girls-day-card h2 {
+    font-size: clamp(24px, 6vw, 36px);
+}
+
+.girls-day-intro {
+    margin-bottom: 8px;
+    color: var(--ink-soft, #5a5146);
+    line-height: 1.9;
+}
+
+#loveHeartCanvas {
+    display: block;
+    width: min(100%, 540px);
+    height: clamp(300px, 78vw, 460px);
+    margin: 0 auto 4px;
+}
+
+.girls-day-card .back-btn,
+.archive-home-btn {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: fit-content;
+    min-height: 44px;
+    margin-top: 18px;
+    padding: 10px 14px;
+    margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+    .welcome-card,
+    .girls-day-card {
+        padding: 28px 20px;
+    }
+
+    #loveHeartCanvas {
+        height: min(86vw, 360px);
+    }
+}
+
 #heartCanvas {
     width: min(85vw, 650px);
     height: min(70vh, 600px);
@@ -2412,5 +2504,178 @@ h2,
         max-height: none;
         margin-top: 26px;
         border-width: 6px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding: max(14px, env(safe-area-inset-top)) 14px
+            max(14px, env(safe-area-inset-bottom));
+    }
+
+    .welcome-card,
+    .girls-day-card {
+        width: 100%;
+    }
+
+    .welcome-card h1 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.55;
+    }
+
+    .welcome-actions {
+        margin-top: 24px;
+    }
+
+    .girls-day-page {
+        align-items: flex-start;
+    }
+
+    .girls-day-card {
+        padding: 22px 16px;
+    }
+
+    .girls-day-card h2 {
+        font-size: clamp(22px, 6.2vw, 30px);
+    }
+
+    #loveHeartCanvas {
+        width: 100%;
+        height: clamp(280px, 84vw, 380px);
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .welcome-card,
+    .girls-day-card {
+        width: min(100%, 680px);
+    }
+
+    .girls-day-card {
+        padding: clamp(28px, 5vw, 42px);
+    }
+
+    #loveHeartCanvas {
+        width: min(100%, 580px);
+        height: clamp(360px, 52vw, 440px);
+    }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+    .girls-day-page {
+        align-items: flex-start;
+    }
+
+    .girls-day-card {
+        margin-block: 8px;
+        padding: 20px 28px;
+    }
+
+    #loveHeartCanvas {
+        height: 220px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-mark {
+        animation: none;
+    }
+}
+
+.archive-card {
+    width: min(100%, 760px);
+    padding: clamp(24px, 5vw, 48px);
+}
+
+.archive-card h2 {
+    margin-bottom: 18px;
+}
+
+.archive-menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.archive-menu #promiseBtn {
+    width: 100%;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .archive-card {
+        padding: 24px 18px;
+    }
+
+    .archive-menu {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}
+
+.girls-day-page {
+    background:
+        radial-gradient(ellipse at 50% 42%, rgba(105, 23, 55, 0.22), transparent 48%),
+        #050609;
+}
+
+.girls-day-card {
+    width: min(100%, 720px);
+    padding: clamp(24px, 5vw, 46px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(20, 19, 25, 0.98), rgba(9, 9, 13, 0.98));
+    box-shadow: 0 28px 100px rgba(0, 0, 0, 0.52), 0 0 55px rgba(150, 30, 77, 0.1);
+    color: #fff9fc;
+}
+
+.girls-day-card h2 {
+    color: #fff9fc;
+    text-shadow: 0 0 22px rgba(255, 255, 255, 0.12);
+}
+
+.girls-day-card .eyebrow {
+    color: #ed9ab5;
+    letter-spacing: 0.02em;
+}
+
+.girls-day-intro {
+    color: #c9bdc5;
+}
+
+#loveHeartCanvas {
+    width: min(100%, 560px);
+    height: clamp(320px, 76vw, 470px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 22px;
+    background: #07070b;
+    box-shadow: inset 0 0 42px rgba(0, 0, 0, 0.8), 0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+.girls-day-card .back-btn {
+    color: #e8cbd8;
+}
+
+.girls-day-card .back-btn:hover {
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .girls-day-card {
+        padding: 22px 16px;
+        border-radius: 20px;
+    }
+
+    #loveHeartCanvas {
+        height: clamp(300px, 86vw, 380px);
+        border-radius: 18px;
+    }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+    .girls-day-card {
+        padding: 20px 28px;
+    }
+
+    #loveHeartCanvas {
+        height: 220px;
     }
 }

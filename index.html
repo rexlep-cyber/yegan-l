@@ -29,108 +29,112 @@
 
 
     <!-- =========================
-         صفحه اصلی
+         صفحه آغازین
     ========================== -->
 
-    <main id="homePage" class="page active">
+    <main id="welcomePage" class="page active">
+        <section class="card welcome-card">
+            <div class="welcome-mark" aria-hidden="true">♡</div>
+            <p class="eyebrow">یه هدیه‌ی کوچیک برای تو</p>
+            <h1>روز دختر مبارکت باشه عسیسم</h1>
 
-        <div class="card home-letter-card">
+            <div class="welcome-actions">
+                <button class="btn primary" id="girlsDayBtn" type="button">
+                    روز دختر مبارکت باشه عسیسم 💗
+                </button>
+                <button class="btn secondary" id="openArchiveBtn" type="button">
+                    📚 بخش‌های قبلی
+                </button>
+            </div>
+        </section>
+    </main>
 
+
+    <!-- =========================
+         قلب چندزبانه
+    ========================== -->
+
+    <main id="girlsDayPage" class="page girls-day-page">
+        <section class="card girls-day-card">
+            <p class="eyebrow">برای قشنگ‌ترین دختر دنیا</p>
+            <h2>دوستت دارم، به همه‌ی زبان‌ها ❤️</h2>
+            <canvas id="loveHeartCanvas" role="img" aria-label="قلبی ساخته‌شده از جمله‌ی دوستت دارم به زبان‌های مختلف"></canvas>
+            <button class="back-btn" id="backFromGirlsDay" type="button">← برگشت به صفحه‌ی اول</button>
+        </section>
+    </main>
+
+
+    <!-- =========================
+         بخش‌های قبلی
+    ========================== -->
+
+    <main id="homePage" class="page">
+        <section class="card archive-card">
+            <p class="eyebrow">هر کدوم، یک تکه از قصه‌ی ما</p>
+            <h2>بخش‌های قبلی</h2>
+            <div class="archive-menu" id="archiveMenu">
+                <button class="btn secondary" id="archiveLetterBtn" type="button">
+                    💌 نامه‌ی قدیمی من
+                </button>
+                <button class="btn primary" id="surpriseBtn" type="button">
+                    ✨ سوپرایز
+                </button>
+                <button class="btn private-btn" id="privateBtn" type="button">
+                    🔐 اتاق محرمانه
+                </button>
+                <button class="btn secondary" id="dateBtn" type="button">
+                    اتاق آشتی ما 🫶
+                </button>
+                <button class="btn secondary" id="letterBtn" type="button">
+                    💌 یه نامه برای تو
+                </button>
+                <button class="btn secondary" id="promiseBtn" type="button">
+                    ✨ یه قول کوچیک
+                </button>
+                <button class="btn secondary" id="reasonsBtn" type="button">
+                    💗 سه دلیل دوست‌داشتنت
+                </button>
+                <button class="btn secondary" id="momentsBtn" type="button">
+                    🌙 قرارمان در سه لحظه
+                </button>
+                <button class="btn secondary" id="wishBtn" type="button">
+                    💫 یه آرزو برای ما
+                </button>
+                <button class="btn secondary new-sections-toggle" id="gameBtn" type="button">
+                    🎴 بازی جفت قلب‌ها
+                </button>
+                <button class="btn secondary memory-btn" id="mondayBtn" type="button">
+                    🏍️ دوشنبه‌ی موتور و شیرموز
+                </button>
+                <button class="btn secondary memory-btn" id="fridayBtn" type="button">
+                    ✨ جمعه‌ی خاص ما
+                </button>
+            </div>
+            <button class="back-btn archive-home-btn" id="backToWelcome" type="button">
+                ← برگشت به صفحه‌ی اول
+            </button>
+        </section>
+    </main>
+
+
+    <!-- =========================
+         نامه‌ی قدیمی
+    ========================== -->
+
+    <main id="archiveLetterPage" class="page">
+        <section class="card home-letter-card">
             <div class="home-letter" lang="fa">
                 <p>نمیدونم این متن رو میخونی یا نه یا کی به دستت میرسه یا کی میای توی وب سایت یا اصلا بعد اینکه گفتی خداحافظ اصلا بهم فک کردی یا نه ایناش مهم نیس چیزی که مهمه اینه که جفتمون عصبانی بودیم و ناراحت شدیم و جرفایی زدیم که جفتمون دوست نداشتیم ولی اینو هم میدونم که دلم نمیخواد ازت دور بمونم یا باهات قهر بمونم دوست دارم مشکلاتمونو بهتر حل کنیم و مثل دو تا ادم رفتار کنیم جفتمون ثبول دارم من زیادی حساسم من خیلی زود قهر میکنم و واقعا بابت این موضوع عذر میخوام و خودمو درست میکنم</p>
                 <p>اینکه گفتی اره با هم شبا حرف بزنیم من این برداشت رو کردم که اصلا حرف نزنیم و فقط همون شبا باشه و برداشتم اشتباه بود و بیشتر ناراحتیم سر اون حرف بود میدونم خیلی اذیت شدیم جفتموون ولی اینم هست که نمیتونم روزی رو تحمل کنم که بیدار بشم و تو نباشی</p>
                 <p>و هر وقت این نامه رو خوندی که امیدوارم همین امشب یعنی 25 شهریور باشه بیای و بهم پیام بدی و سایت رو باز کنی بدون خیلی دلم تنگ شده برات اگه خواستی پیامم بدی ی پیامک یا تک زنگ بزن</p>
                 <p>دوست دارم عشقم و راستی اینم هست که فردا 5 شنبه بریم بیرون بیشتر حرف بزنیم در مورد خودمون<br>و برات معینی پور میخرم<br>دوست دارم</p>
                 <p>اگرم بهم شب بخیر نگفتیم این جا من بهت میگم شبت بخیر باشه عشقم خوب بخوابی مراقبت کن</p>
-
                 <img class="home-letter-photo" src="photo1.jpg" alt="عکس یادگاری ما">
             </div>
-
-            <div class="home-actions">
-                <button
-                    class="btn secondary archive-toggle"
-                    id="archiveBtn"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="archiveMenu">
-                    📚 بخش‌های قبلی
-                </button>
-
-                <div class="archive-menu" id="archiveMenu" hidden>
-
-                    <button
-                        class="btn primary"
-                        id="surpriseBtn"
-                        type="button">
-                        ✨ سوپرایز
-                    </button>
-
-                    <button class="btn private-btn" id="privateBtn" type="button">
-                        🔐 اتاق محرمانه
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="dateBtn"
-                        type="button">
-                        اتاق آشتی ما 🫶
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="letterBtn"
-                        type="button">
-                        💌 یه نامه برای تو
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="promiseBtn"
-                        type="button">
-                        ✨ یه قول کوچیک
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="reasonsBtn"
-                        type="button">
-                        💗 سه دلیل دوست‌داشتنت
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="momentsBtn"
-                        type="button">
-                        🌙 قرارمان در سه لحظه
-                    </button>
-
-                    <button
-                        class="btn secondary"
-                        id="wishBtn"
-                        type="button">
-                        💫 یه آرزو برای ما
-                    </button>
-
-                    <button
-                        class="btn secondary new-sections-toggle"
-                        id="gameBtn"
-                        type="button">
-                        🎴 بازی جفت قلب‌ها
-                    </button>
-
-                    <button class="btn secondary memory-btn" id="mondayBtn" type="button">
-                        🏍️ دوشنبه‌ی موتور و شیرموز
-                    </button>
-
-                    <button class="btn secondary memory-btn" id="fridayBtn" type="button">
-                        ✨ جمعه‌ی خاص ما
-                    </button>
-
-                </div>
-            </div>
-
-        </div>
-
+            <button class="back-btn archive-home-btn" id="backFromArchiveLetter" type="button">
+                ← برگشت به فهرست
+            </button>
+        </section>
     </main>
 
 
