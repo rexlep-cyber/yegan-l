@@ -51,6 +51,7 @@ body {
 }
 
 .page.active {
+    z-index: 1;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -2524,7 +2525,7 @@ h2,
     }
 
     .welcome-actions {
-        margin-top: 24px;
+        margin-top: 40px;
     }
 
     .girls-day-page {

@@ -1325,6 +1325,18 @@ function buildLoveHeart() {
     const centerX = width / 2;
     const centerY = height / 2;
 
+    loveHeartPath = new Path2D();
+    boundary.forEach((point, index) => {
+        const x = centerX + point.x * scale;
+        const y = centerY - (point.y - middleY) * scale;
+        if (index === 0) {
+            loveHeartPath.moveTo(x, y);
+        } else {
+            loveHeartPath.lineTo(x, y);
+        }
+    });
+    loveHeartPath.closePath();
+
     // Denser rows to avoid visible gaps
     const rowHeight = width < 420 ? 12 : 14; // smaller rows
     const halfRow = rowHeight / (2 * scale);
@@ -1487,6 +1499,10 @@ function drawLoveHeart(now) {
     if (loveHeartPath) {
         context.fillStyle = grad;
         context.fill(loveHeartPath);
+        context.strokeStyle = "rgba(238, 125, 163, 0.78)";
+        context.lineWidth = 1.35;
+        context.lineJoin = "round";
+        context.stroke(loveHeartPath);
     }
     context.restore();
 
