@@ -1305,59 +1305,156 @@ function buildLoveHeart() {
     loveHeartCanvas.height = Math.round(height * pixelRatio);
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const scale = Math.min(width * 0.44 / 16, height * 0.44 / 17);
-    const heartPath = new Path2D();
-    let firstPoint = true;
-
-    for (let step = 0; step <= 720; step += 1) {
-        const angle = (step / 720) * Math.PI * 2;
-        const x = centerX + 16 * Math.pow(Math.sin(angle), 3) * scale;
-        const y = centerY - (
-            13 * Math.cos(angle)
-            - 5 * Math.cos(2 * angle)
-            - 2 * Math.cos(3 * angle)
-            - Math.cos(4 * angle)
-        ) * scale;
-        if (firstPoint) {
-            heartPath.moveTo(x, y);
-            firstPoint = false;
-        } else {
-            heartPath.lineTo(x, y);
-        }
-    }
-    heartPath.closePath();
-    loveHeartPath = heartPath;
-
-    const lineHeight = width < 420 ? 15 : 17;
-    const rows = [];
-    let phraseIndex = Math.floor(Math.random() * lovePhrases.length);
-    context.font = `600 ${width < 420 ? 12 : 14}px "Noto Serif Arabic", "Vazirmatn", serif`;
-
-    for (let y = centerY - 17 * scale + lineHeight; y < centerY + 17 * scale; y += lineHeight) {
-        let text = "";
-        let textWidth = 0;
-        let guard = 0;
-
-        while (textWidth < width * 1.4 && guard < lovePhrases.length * 3) {
-            const phrase = lovePhrases[phraseIndex];
-            phraseIndex = (phraseIndex + 1) % lovePhrases.length;
-            const segment = `${phrase}   `;
-            text += segment;
-            textWidth += context.measureText(segment).width;
-            guard += 1;
-        }
-
-        rows.push({
-            text,
-            y,
-            delay: ((y - (centerY - 17 * scale)) / (34 * scale)) * 9200,
-            offset: Math.random() * 22 - 11
+    // Build the heart boundary in parametric units (the original shape)
+    const boundary = [];
+    for (let point = 0; point <= 720; point += 1) {
+        const angle = (point / 720) * Math.PI * 2;
+        boundary.push({
+            x: 16 * Math.pow(Math.sin(angle), 3),
+            y: 13 * Math.cos(angle)
+                - 5 * Math.cos(2 * angle)
+                - 2 * Math.cos(3 * angle)
+                - Math.cos(4 * angle)
         });
     }
 
-    loveHeartEntries = rows;
+    const minY = Math.min(...boundary.map(p => p.y));
+    const maxY = Math.max(...boundary.map(p => p.y));
+    const middleY = (maxY + minY) / 2;
+    const scale = Math.min(width * 0.88 / 32, height * 0.88 / (maxY - minY));
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    // Denser rows to avoid visible gaps
+    const rowHeight = width < 420 ? 12 : 14; // smaller rows
+    const halfRow = rowHeight / (2 * scale);
+    const rows = [];
+
+    function spansAt(y) {
+        const intersections = [];
+        for (let i = 0; i < boundary.length - 1; i += 1) {
+            const a = boundary[i];
+            const b = boundary[i + 1];
+            if ((a.y <= y && b.y > y) || (b.y <= y && a.y > y)) {
+                intersections.push(
+                    a.x + ((y - a.y) * (b.x - a.x)) / (b.y - a.y)
+                );
+            }
+        }
+        intersections.sort((p, q) => p - q);
+        const spans = [];
+        for (let i = 0; i + 1 < intersections.length; i += 2) {
+            spans.push([intersections[i], intersections[i + 1]]);
+        }
+        return spans;
+    }
+
+    for (let y = maxY - halfRow; y > minY + halfRow; y -= rowHeight / scale) {
+        const upper = spansAt(y + halfRow);
+        const lower = spansAt(y - halfRow);
+        upper.forEach(([uL, uR]) => {
+            lower.forEach(([lL, lR]) => {
+                const left = Math.max(uL, lL);
+                const right = Math.min(uR, lR);
+                if ((right - left) * scale > 8) { // allow narrow spans, helps remove gaps
+                    rows.push({
+                        left: centerX + left * scale + 0.5,
+                        right: centerX + right * scale - 0.5,
+                        y: centerY - (y - middleY) * scale
+                    });
+                }
+            });
+        });
+    }
+
+    const fontSizes = width < 420 ? [11, 10, 9] : [14, 12, 11, 10];
+    let phraseBag = [];
+    let previousPhrase = "";
+    const entries = [];
+
+    function shufflePhrases() {
+        phraseBag = [...lovePhrases];
+        for (let i = phraseBag.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [phraseBag[i], phraseBag[j]] = [phraseBag[j], phraseBag[i]];
+        }
+        if (phraseBag.length && phraseBag[phraseBag.length - 1] === previousPhrase) {
+            [phraseBag[0], phraseBag[phraseBag.length - 1]] = [
+                phraseBag[phraseBag.length - 1],
+                phraseBag[0]
+            ];
+        }
+    }
+
+    function takePhrase(maxWidth) {
+        if (!phraseBag.length) shufflePhrases();
+        for (let i = 0; i < phraseBag.length; i += 1) {
+            const text = phraseBag[i];
+            for (const fontSize of fontSizes) {
+                context.font = `700 ${fontSize}px Vazirmatn, Arial, sans-serif`;
+                const measured = context.measureText(text).width;
+                if (measured <= maxWidth) {
+                    phraseBag.splice(i, 1);
+                    previousPhrase = text;
+                    return { text, fontSize, width: measured };
+                }
+            }
+        }
+        return null;
+    }
+
+    rows.forEach(row => {
+        const gap = width < 420 ? 0.4 : 0.6; // very small gap to reduce holes
+        let cursor = row.left;
+        let firstEntry = null;
+        let lastEntry = null;
+        let guard = 0;
+        while (cursor < row.right - 6 && guard < 800) {
+            guard += 1;
+            const space = row.right - cursor;
+            const phrase = takePhrase(space);
+            if (!phrase) {
+                break;
+            }
+
+            const entry = {
+                x: cursor + phrase.width / 2,
+                y: row.y,
+                text: phrase.text,
+                fontSize: phrase.fontSize,
+                delay: 0,
+                offset: (Math.random() - 0.5) * 6,
+                color: [255, 255, 255],
+                edge: false
+            };
+            entries.push(entry);
+            if (!firstEntry) firstEntry = entry;
+            lastEntry = entry;
+            cursor += phrase.width + gap;
+        }
+        if (firstEntry) firstEntry.edge = true;
+        if (lastEntry) lastEntry.edge = true;
+    });
+
+    // Sort edge entries around the perimeter for a continuous outline
+    const edgeEntries = entries.filter(e => e.edge);
+    const innerEntries = entries.filter(e => !e.edge);
+
+    edgeEntries.sort((a, b) => (
+        Math.atan2(a.x - centerX, centerY - a.y) - Math.atan2(b.x - centerX, centerY - b.y)
+    ));
+
+    innerEntries.sort((a, b) => (
+        Math.hypot(b.x - centerX, b.y - centerY) - Math.hypot(a.x - centerX, a.y - centerY)
+    ));
+
+    const drawOrder = [...edgeEntries, ...innerEntries];
+    const revealDuration = 9000;
+    drawOrder.forEach((entry, idx) => {
+        entry.delay = (idx / Math.max(drawOrder.length - 1, 1)) * revealDuration;
+    });
+
+    loveHeartEntries = drawOrder;
     loveHeartStartedAt = performance.now();
 }
 
@@ -1373,63 +1470,58 @@ function drawLoveHeart(now) {
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     context.clearRect(0, 0, width, height);
 
-    context.fillStyle = "#07070b";
+    // Background
+    context.fillStyle = "#050509";
     context.fillRect(0, 0, width, height);
 
+    // Heart fill gradient (subtle, base shape to guide the eye)
     const centerX = width / 2;
     const centerY = height / 2;
-    const scale = Math.min(width * 0.44 / 16, height * 0.44 / 17);
-    const gradient = context.createLinearGradient(
-        centerX - 16 * scale,
-        centerY - 13 * scale,
-        centerX + 16 * scale,
-        centerY + 17 * scale
-    );
-    gradient.addColorStop(0, "#35101f");
-    gradient.addColorStop(0.52, "#160b16");
-    gradient.addColorStop(1, "#3a0c20");
+    const scale = Math.min(width * 0.88 / 32, height * 0.88 / 32);
+    const grad = context.createLinearGradient(centerX - 16 * scale, centerY - 13 * scale, centerX + 16 * scale, centerY + 17 * scale);
+    grad.addColorStop(0, "rgba(200,40,90,0.06)");
+    grad.addColorStop(0.6, "rgba(180,30,70,0.04)");
+    grad.addColorStop(1, "rgba(120,10,40,0.02)");
 
     context.save();
-    context.shadowColor = "rgba(238, 72, 126, 0.42)";
-    context.shadowBlur = 26;
-    context.fillStyle = gradient;
-    context.fill(loveHeartPath);
+    if (loveHeartPath) {
+        context.fillStyle = grad;
+        context.fill(loveHeartPath);
+    }
     context.restore();
 
-    context.save();
-    context.clip(loveHeartPath);
+    // Draw text entries; edge entries first to create a continuous outline
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.fillStyle = "#fff9fc";
-    context.shadowColor = "rgba(255, 248, 252, 0.12)";
-    context.shadowBlur = 1.5;
 
-    loveHeartEntries.forEach(row => {
-        const progress = Math.max(
-            0,
-            Math.min(1, (now - loveHeartStartedAt - row.delay) / 720)
-        );
-        if (!progress) {
-            return;
-        }
-
+    loveHeartEntries.forEach(entry => {
+        const progress = Math.max(0, Math.min(1, (now - loveHeartStartedAt - entry.delay) / 480));
+        if (!progress) return;
         const eased = 1 - Math.pow(1 - progress, 3);
-        const shimmer = Math.sin((now / 700) + row.y) > 0.985;
-        context.globalAlpha = 0.25 + eased * 0.75;
-        context.font = `600 ${width < 420 ? 12 : 14}px "Noto Serif Arabic", "Vazirmatn", serif`;
-        if (shimmer) {
-            context.shadowColor = "rgba(255, 206, 230, 0.42)";
-            context.shadowBlur = 3;
+        const x = entry.x + entry.offset * (1 - eased);
+        const y = entry.y - 22 * (1 - eased);
+        context.font = `700 ${entry.fontSize}px Vazirmatn, Arial, sans-serif`;
+
+        if (entry.edge) {
+            // Stronger, crisp outline look
+            context.globalAlpha = 0.98 * eased;
+            context.fillStyle = "#ffffff";
+            // slight stroke to give a crisp edge but very subtle
+            context.lineWidth = Math.max(0.6, entry.fontSize * 0.06);
+            context.strokeStyle = "rgba(0,0,0,0.08)";
+            context.strokeText(entry.text, x, y);
+            context.fillText(entry.text, x, y);
         } else {
-            context.shadowColor = "rgba(255, 248, 252, 0.12)";
-            context.shadowBlur = 1.5;
+            // inner text is softer
+            context.globalAlpha = 0.86 * eased;
+            context.fillStyle = "rgba(255,205,220,0.95)";
+            // no heavy shadow
+            context.shadowBlur = 0;
+            context.fillText(entry.text, x, y);
         }
-        context.fillText(row.text, width / 2 + row.offset * (1 - eased), row.y - 32 * (1 - eased));
     });
-    context.restore();
 
     context.globalAlpha = 1;
-    context.shadowBlur = 0;
     loveHeartFrame = requestAnimationFrame(drawLoveHeart);
 }
 
